@@ -1,8 +1,8 @@
-import client.frame.GameView;
+import client.frame.MainView;
 
 public class Main {
     public static void main(String[] args) {
 
-        GameView gameView = new GameView();
+        MainView gameView = new MainView();
     }
 }

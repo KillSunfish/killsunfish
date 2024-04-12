@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class GameView extends JFrame {
+public class MainView extends JFrame {
 
     private final BackgroundImagePanel backgroundImagePanel;
 
@@ -12,7 +12,7 @@ public class GameView extends JFrame {
 
     private JButton btn_toggleBackground;
 
-    public GameView() {
+    public MainView() {
         // deps
         this.backgroundImagePanel = new BackgroundImagePanel("intro");
         this.backgroundType = "intro";
