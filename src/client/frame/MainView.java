@@ -1,22 +1,34 @@
 package client.frame;
 
+import client.components.User;
+import client.components.Start;
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
 
     private final BackgroundImagePanel backgroundImagePanel;
+    private final Start startComponent;
+    private User userComponent;
 
     private String backgroundType;
 
     private JButton btn_toggleBackground;
 
+
     public MainView() {
         // deps
-        this.backgroundImagePanel = new BackgroundImagePanel("intro");
         this.backgroundType = "intro";
         this.btn_toggleBackground = new JButton("toggle");
+
+
+        // background panel
+        this.backgroundImagePanel = new BackgroundImagePanel("intro");
+        this.setContentPane(backgroundImagePanel);
+
+        this.startComponent = new Start(this);
+        startComponent.setBounds(0, 0, 1280, 960);
+        this.add(startComponent);
 
         // init
         setTitle("sunfish game");
@@ -26,32 +38,43 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
 
-        // background panel
-        this.setContentPane(backgroundImagePanel);
+
+
 
         // test - toggle btn
-        btn_toggleBackground.setBounds(100, 0, 100, 30);
-        btn_toggleBackground.setBackground(Color.BLUE);
-        addBtnActionListener(btn_toggleBackground);
-        this.add(btn_toggleBackground);
+//        btn_toggleBackground.setBounds(100, 0, 100, 30);
+//        btn_toggleBackground.setBackground(Color.BLUE);
+//        addBtnActionListener(btn_toggleBackground);
+//        this.add(btn_toggleBackground);
 
         // add
     }
 
-    private void addBtnActionListener(AbstractButton btn) {
-        ActionListener actionListener = (e) -> {
+//    private void addBtnActionListener(AbstractButton btn) {
+//        ActionListener actionListener = (e) -> {
+//
+//            // intro or in game image
+//            this.backgroundImagePanel.modifyBackgroundImage("ingame".equals(this.backgroundType) ? "intro" : "ingame");
+//            // field to test toggle
+//            this.backgroundType = "ingame".equals(this.backgroundType) ? "intro" : "ingame";
+//
+//            // repaint after updated
+//            repaint();
+//
+//        };
+//
+//        btn.addActionListener(actionListener);
+//    }
 
-            // intro or in game image
-            this.backgroundImagePanel.modifyBackgroundImage("ingame".equals(this.backgroundType) ? "intro" : "ingame");
-            // field to test toggle
-            this.backgroundType = "ingame".equals(this.backgroundType) ? "intro" : "ingame";
-
-            // repaint after updated
-            repaint();
-
-        };
-
-        btn.addActionListener(actionListener);
+    public void switchToLoggedInView(String type) {
+        userComponent = new User(type);
+        // Remove Start component
+        remove(startComponent);
+        // Add LoggedInComponent
+        userComponent.setBounds(0,0,1280,960);
+        add(userComponent);
+        // Revalidate and repaint
+        revalidate();
+        repaint();
     }
-
 }
