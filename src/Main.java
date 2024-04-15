@@ -7,5 +7,6 @@ public class Main {
         new UserController();
 
         MainView gameView = new MainView();
+
     }
 }
