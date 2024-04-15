@@ -4,12 +4,16 @@ import client.components.User;
 import client.components.Start;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import client.components.Navbar; // Navbar를 import합니다.
 
 public class MainView extends JFrame {
 
     private final BackgroundImagePanel backgroundImagePanel;
     private final Start startComponent;
     private User userComponent;
+    private final Navbar navbar;
 
     private String backgroundType;
 
@@ -20,6 +24,7 @@ public class MainView extends JFrame {
         // deps
         this.backgroundType = "intro";
         this.btn_toggleBackground = new JButton("toggle");
+        this.navbar = new Navbar(); // Navbar 추가
 
 
         // background panel
@@ -40,6 +45,10 @@ public class MainView extends JFrame {
 
 
 
+
+        // Navbar 위치 지정
+        navbar.setBounds(0, 100, getWidth(), 50);
+        add(navbar);
 
         // test - toggle btn
 //        btn_toggleBackground.setBounds(100, 0, 100, 30);
