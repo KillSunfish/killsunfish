@@ -5,7 +5,7 @@ import server.user.User;
 public class UserController {
     private UserDao userDao;
 
-    // main view
+    // Main View
     public UserController() {
         // new CalcView(this);
         // userDao = new UserDao();
