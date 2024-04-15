@@ -7,7 +7,8 @@ public class Octopus extends SeaCreature{
     private static final int OCTOPUS_WIDTH = 70; // 새로운 이미지의 너비
     private static final int OCTOPUS_HEIGHT = 70; // 새로운 이미지의 높이
 
-    public Octopus() {
-        super(OCTOPUS_IMAGE_PATH, OCTOPUS_WIDTH, OCTOPUS_HEIGHT);
+    public Octopus(int xSpeed, int ySpeed) {
+
+        super(OCTOPUS_IMAGE_PATH, OCTOPUS_WIDTH, OCTOPUS_HEIGHT , xSpeed, ySpeed);
     }
 }
