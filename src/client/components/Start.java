@@ -16,6 +16,7 @@ public class Start extends JComponent {
     private Images img_titleText;
     private MainView mainView;
 
+
     public Start (MainView mainView) {
         this.mainView = mainView;
         this.btn_signIn = new JButton("로그인");
@@ -31,8 +32,7 @@ public class Start extends JComponent {
         btn_signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 로그인 버튼 클릭 시 다음 화면으로 전환
-                mainView.switchToLoggedInView("signIn");
+                mainView.switchView("signIn");
             }
         });
 
@@ -44,8 +44,7 @@ public class Start extends JComponent {
         btn_signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 로그인 버튼 클릭 시 다음 화면으로 전환
-                mainView.switchToLoggedInView("signUp");
+                mainView.switchView("signUp");
             }
         });
 

@@ -66,14 +66,11 @@ public class MainView extends JFrame {
 //        btn.addActionListener(actionListener);
 //    }
 
-    public void switchToLoggedInView(String type) {
-        userComponent = new User(type);
-        // Remove Start component
+    public void switchView(String type) {
+        userComponent = new User(this, type);
         remove(startComponent);
-        // Add LoggedInComponent
         userComponent.setBounds(0,0,1280,960);
         add(userComponent);
-        // Revalidate and repaint
         revalidate();
         repaint();
     }
