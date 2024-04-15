@@ -47,8 +47,8 @@ public class MainView extends JFrame {
 
 
         // Navbar 위치 지정
-        navbar.setBounds(0, 100, getWidth(), 50);
-        add(navbar);
+//        navbar.setBounds(0, 100, getWidth(), 50);
+//        add(navbar);
 
         // test - toggle btn
 //        btn_toggleBackground.setBounds(100, 0, 100, 30);
