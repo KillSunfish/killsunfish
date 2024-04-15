@@ -3,10 +3,12 @@ package client.frame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import client.components.Navbar; // Navbar를 import합니다.
 
 public class MainView extends JFrame {
 
     private final BackgroundImagePanel backgroundImagePanel;
+    private final Navbar navbar;
 
     private String backgroundType;
 
@@ -17,6 +19,7 @@ public class MainView extends JFrame {
         this.backgroundImagePanel = new BackgroundImagePanel("intro");
         this.backgroundType = "intro";
         this.btn_toggleBackground = new JButton("toggle");
+        this.navbar = new Navbar(); // Navbar 추가
 
         // init
         setTitle("sunfish game");
@@ -28,6 +31,10 @@ public class MainView extends JFrame {
 
         // background panel
         this.setContentPane(backgroundImagePanel);
+
+        // Navbar 위치 지정
+        navbar.setBounds(0, 100, getWidth(), 50);
+        add(navbar);
 
         // test - toggle btn
         btn_toggleBackground.setBounds(100, 0, 100, 30);
