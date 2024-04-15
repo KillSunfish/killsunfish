@@ -5,22 +5,36 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import client.components.Navbar;
 import client.components.CustomButton;
+import client.components.StarFish;
+import client.components.Sunfish; // Sunfish 클래스 임포트
+import client.components.Shrimp;
+import client.components.ShellFish;
+import client.components.Octopus;
+import client.components.Crab;
 
 public class HomeScreen extends JFrame {
     private static final String INGAME_BACKGROUND_PATH = "src/client/assets/ingame_background.png";
     private static final String SUNFISH_IMAGE_PATH = "src/client/assets/sunfish.jpg";
 
+    private ImageIcon backgroundImage;
     private Navbar navbar; // Navbar 객체 선언
     private CustomButton btn_plus;
     private CustomButton btn_minus;
     private JLabel lbl_temperature;
+    private Sunfish sunfish; // Sunfish 객체 선언
+    private Shrimp shrimp;
+    private ShellFish shellfish;
+
+    private StarFish starfish;
+    private Octopus octopus;
+    private Crab crab;
 
     private double temperature = 37.0;
 
     public HomeScreen() {
         // Load images
-        ImageIcon backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
-        ImageIcon sunfishImage = new ImageIcon(SUNFISH_IMAGE_PATH);
+        backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
+        
 
         navbar = new Navbar(); // Navbar 객체 생성
 
@@ -56,7 +70,23 @@ public class HomeScreen extends JFrame {
         // 배경 이미지 JLabel 생성 및 설정
         JLabel backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setBounds(0, -100, getWidth(), getHeight());
+      
+        // Create Sunfish instance
+        sunfish = new Sunfish();
+        shrimp = new Shrimp();
+        shellfish = new ShellFish();
+        starfish = new StarFish();
+        octopus = new Octopus();
+        crab = new Crab();
+      
+        // Add Sunfish instance to background label
         add(backgroundLabel);
+        backgroundLabel.add(sunfish);
+        backgroundLabel.add(shrimp);
+        backgroundLabel.add(shellfish);
+        backgroundLabel.add(starfish);
+        backgroundLabel.add(octopus);
+        backgroundLabel.add(crab);
 
         // 태양물고기 이미지 JLabel 생성 및 설정
         JLabel sunfishLabel = new JLabel(sunfishImage);
@@ -87,6 +117,7 @@ public class HomeScreen extends JFrame {
     // 온도 라벨 업데이트 메서드
     private void updateTemperatureLabel() {
         lbl_temperature.setText("" + String.format("%.1f", temperature)+"°C");
+
     }
 
     public static void main(String[] args) {
