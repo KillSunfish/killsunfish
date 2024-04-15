@@ -88,12 +88,6 @@ public class HomeScreen extends JFrame {
         backgroundLabel.add(octopus);
         backgroundLabel.add(crab);
 
-        // 태양물고기 이미지 JLabel 생성 및 설정
-        JLabel sunfishLabel = new JLabel(sunfishImage);
-        int x = (getWidth() - sunfishImage.getIconWidth()) / 2;
-        int y = (getHeight() - sunfishImage.getIconHeight()) / 2;
-        sunfishLabel.setBounds(x, y, sunfishImage.getIconWidth(), sunfishImage.getIconHeight());
-        backgroundLabel.add(sunfishLabel);
     }
 
     private void addBtnPlusActionListener(CustomButton btn) {
