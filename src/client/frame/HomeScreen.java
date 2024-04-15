@@ -1,45 +1,63 @@
 package client.frame;
 
 import javax.swing.*;
-import java.awt.*;
+
+import client.components.StarFish;
+import client.components.Sunfish; // Sunfish 클래스 임포트
+import client.components.Shrimp;
+import client.components.ShellFish;
+import client.components.Octopus;
+import client.components.Crab;
 
 public class HomeScreen extends JFrame {
     private static final String INGAME_BACKGROUND_PATH = "src/client/assets/ingame_background.png";
-    private static final String SUNFISH_IMAGE_PATH = "src/client/assets/sunfish.jpg";
 
     private ImageIcon backgroundImage;
-    private ImageIcon sunfishImage;
+    private Sunfish sunfish; // Sunfish 객체 선언
+    private Shrimp shrimp;
+    private ShellFish shellfish;
+
+    private StarFish starfish;
+    private Octopus octopus;
+    private Crab crab;
 
     public HomeScreen() {
-        // Load images
+        // Load background image
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
-        sunfishImage = new ImageIcon(SUNFISH_IMAGE_PATH);
 
         // Set frame properties
         setTitle("Sunfish Game");
-        setSize(1280, 980); // 화면 크기 설정
+        setSize(1280, 960);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Create JLabels for background image and Sunfish image
+        // Create JLabel for background image
         JLabel backgroundLabel = new JLabel(backgroundImage);
-        JLabel sunfishLabel = new JLabel(sunfishImage);
 
         // Set layout to null to freely position components
         setLayout(null);
 
         // Set bounds for background label to cover the entire frame
-        backgroundLabel.setBounds(0, 0, getWidth(), getHeight());
+        backgroundLabel.setBounds(0, -100, getWidth(), getHeight());
 
-        // Calculate the position to center the Sunfish image
-        int x = (getWidth() - sunfishImage.getIconWidth()) / 2;
-        int y = (getHeight() - sunfishImage.getIconHeight()) / 2;
+        // Create Sunfish instance
+        sunfish = new Sunfish();
+        shrimp = new Shrimp();
+        shellfish = new ShellFish();
+        starfish = new StarFish();
+        octopus = new Octopus();
+        crab = new Crab();
 
-        // Set bounds for Sunfish label
-        sunfishLabel.setBounds(x, y, sunfishImage.getIconWidth(), sunfishImage.getIconHeight());
 
-        // Add labels to the frame
+        // Add Sunfish instance to background label
+        backgroundLabel.add(sunfish);
+        backgroundLabel.add(shrimp);
+        backgroundLabel.add(shellfish);
+        backgroundLabel.add(starfish);
+        backgroundLabel.add(octopus);
+        backgroundLabel.add(crab);
+
+        // Add background label to the frame
         add(backgroundLabel);
-        backgroundLabel.add(sunfishLabel);
     }
 
     public static void main(String[] args) {
@@ -49,3 +67,4 @@ public class HomeScreen extends JFrame {
         });
     }
 }
+
