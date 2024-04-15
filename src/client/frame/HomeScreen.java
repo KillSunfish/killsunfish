@@ -15,6 +15,8 @@ import client.components.Shrimp;
 import client.components.ShellFish;
 import client.components.Octopus;
 import client.components.Crab;
+import client.components.RottenFish;
+import client.components.ShellFish;
 
 public class HomeScreen extends JFrame {
     private static final String INGAME_BACKGROUND_PATH = "src/client/assets/ingame_background.png";
@@ -27,10 +29,13 @@ public class HomeScreen extends JFrame {
     private JLabel lbl_temperature;
     private Sunfish sunfish;
     private Shrimp shrimp;
-    private ShellFish shellfish;
+
+    private ShellFish shellFish;
+
     private StarFish starfish;
     private Octopus octopus;
     private Crab crab;
+    private RottenFish rottenfish;
 
     private double temperature = 20.0;
     private int weight = 30;
@@ -66,11 +71,8 @@ public class HomeScreen extends JFrame {
         backgroundLabel.setBounds(0, -100, getWidth(), getHeight());
 
         sunfish = new Sunfish();
-        shrimp = new Shrimp();
-        shellfish = new ShellFish();
-        starfish = new StarFish();
-        octopus = new Octopus();
-        crab = new Crab();
+        octopus = new Octopus(-250, -250);
+        crab = new Crab(5,5);
 
         sunfish.addMouseListener(new MouseAdapter() {
             @Override
@@ -82,12 +84,38 @@ public class HomeScreen extends JFrame {
 
         add(backgroundLabel);
         backgroundLabel.add(sunfish);
-        backgroundLabel.add(shrimp);
-        backgroundLabel.add(shellfish);
-        backgroundLabel.add(starfish);
         backgroundLabel.add(octopus);
         backgroundLabel.add(crab);
     }
+
+
+        // Add background label to the frame
+        add(backgroundLabel);
+
+
+        octopus.startMoving();
+        crab.startMoving();
+
+        for (int i = 0; i < 5; i++) {
+            RottenFish rottenFish = new RottenFish(5, 5); // 움직임 설정
+            backgroundLabel.add(rottenFish);
+            rottenFish.startMoving();
+        }
+
+        for (int i = 0; i < 3; i++) {
+            StarFish starfish = new StarFish(1,1); // 움직임 설정
+            backgroundLabel.add(starfish);
+            starfish.startMoving();
+        }
+
+        for (int i = 0; i < 2; i++) {
+            Shrimp shrimp = new Shrimp(15,15); // 움직임 설정
+            ShellFish shellFish = new ShellFish(-10, -10);
+            backgroundLabel.add(shrimp);
+            backgroundLabel.add(shellFish);
+            shrimp.startMoving();
+            shellFish.startMoving();
+        }
 
     private void addBtnPlusActionListener(CustomButton btn) {
         ActionListener actionListener = (e) -> {
@@ -121,6 +149,7 @@ public class HomeScreen extends JFrame {
             tempDeath = -1; // 새로운 변수 초기화
             System.out.println("온도가 15도 미만이거나 25도를 초과하여 개복치가 죽었습니다.: " + tempDeath);
         }
+
     }
 
     public static void main(String[] args) {
