@@ -127,6 +127,7 @@ public class HomeScreen extends JFrame {
                     increaseWeightAndMoveSunfish(foodComponent, 1);
                     navbar.setOrangeWidth(1);
                 } else if (foodComponent instanceof Crab) {
+
                     increaseWeightAndMoveSunfish(foodComponent, 0.4);
                     navbar.setOrangeWidth(0.4);
                 } else if (foodComponent instanceof StarFish) {
@@ -280,6 +281,11 @@ public class HomeScreen extends JFrame {
             System.out.println("온도가 15도 미만이거나 25도를 초과하여 개복치가 죽었습니다.: " + tempDeath);
         }
     }
+
+    public void updateSunfishLevel(int level) {
+        sunfish.updateImage(level);
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

@@ -2,6 +2,7 @@ package client.components;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.awt.image.BufferedImage;
 
 public class Sunfish extends JLabel {
