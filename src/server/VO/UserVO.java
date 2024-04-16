@@ -1,20 +1,18 @@
-package server.user;
+package server.VO;
 
-import java.util.Formatter;
-
-public class User{
+public class UserVO {
     private String id;
     private String password;
     private String sunfishName;
     private double weight;
     private int level;
 
-    public User() {}
-    public User(String id, String password, String sunfishName) {
+    public UserVO() {}
+    public UserVO(String id, String password, String sunfishName) {
         this.id = id;
         this.password = password;
         this.sunfishName = sunfishName;
-        this.weight = 0.1;
+        this.weight = 0.0;
         this.level = 1;
     }
 

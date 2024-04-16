@@ -1,21 +1,20 @@
 package server.controller;
 import server.dao.UserDao;
-import server.user.User;
+import server.VO.UserVO;
 
 public class UserController {
     private UserDao userDao;
 
     // Main View
     public UserController() {
-        // new CalcView(this);
-        // userDao = new UserDao();
+        userDao = new UserDao();
     }
 
-    public void signUp(String id, String password, String sunfishName) {
-        userDao.signUp(new User(id, password, sunfishName));
+    public boolean signUp(String id, String password, String sunfishName) {
+        return (userDao.signUp(new UserVO(id, password, sunfishName)));
     }
 
-    public User login(String id, String password) {
+    public UserVO login(String id, String password) {
         return userDao.login(id, password);
     }
 
