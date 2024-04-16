@@ -116,11 +116,11 @@ public class HomeScreen extends JFrame {
                     increaseWeightAndMoveSunfish(foodComponent, 0.2);
                     navbar.setOrangeWidth(0.2);
                 } else if (foodComponent instanceof Octopus) {
+                    increaseWeightAndMoveSunfish(foodComponent, 1);
+                    navbar.setOrangeWidth(1);
+                } else if (foodComponent instanceof Crab) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.6);
                     navbar.setOrangeWidth(0.6);
-                } else if (foodComponent instanceof Crab) {
-                    increaseWeightAndMoveSunfish(foodComponent, 5);
-                    navbar.setOrangeWidth(5);
                 } else if (foodComponent instanceof StarFish) {
 
                     increaseWeightAndMoveSunfish(foodComponent, 0.2);
@@ -258,6 +258,11 @@ public class HomeScreen extends JFrame {
             System.out.println("온도가 15도 미만이거나 25도를 초과하여 개복치가 죽었습니다.: " + tempDeath);
         }
     }
+
+    public void updateSunfishLevel(int level) {
+        sunfish.updateImage(level);
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
