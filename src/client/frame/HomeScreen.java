@@ -45,8 +45,10 @@ public class HomeScreen extends JFrame {
     private Timer clickTimer; // 타이머 변수 선언
     private int clickFish = 0;
     private final int RESET_INTERVAL = 5000; // 5초마다 초기화
-
     private int eatDeath = 0;
+    private int overEatDeath = 0;
+    private int underEatDeath = 0;
+    private double eatenWeight = 0.0; // 시간 내에 먹은 양
 
     public HomeScreen(UserVO userVO) {
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
@@ -143,6 +145,12 @@ public class HomeScreen extends JFrame {
             }
         };
 
+        // 일정 시간 동안 먹은 양이 기준치를 초과할 때 죽는 기능을 위한 20초 타이머
+        Timer checkEatenWeightTimer = new Timer(20000, (e) -> {
+            checkEatenWeight();
+        });
+        checkEatenWeightTimer.start();
+
         shrimp1.addMouseListener(foodMouseListener);
         shrimp2.addMouseListener(foodMouseListener);
         shellFish.addMouseListener(foodMouseListener);
@@ -224,6 +232,9 @@ public class HomeScreen extends JFrame {
 
         sunfish.setLocation(foodComponent.getX(), foodComponent.getY());
         foodComponent.setVisible(false);
+
+        // 먹은 양 누적
+        eatenWeight += weightIncrease;
     }
 
     private void addBtnPlusActionListener(CustomButton btn) {
@@ -255,6 +266,20 @@ public class HomeScreen extends JFrame {
             tempDeath = -1;
             System.out.println("온도가 15도 미만이거나 25도를 초과하여 개복치가 죽었습니다.: " + tempDeath);
         }
+    }
+
+    private void checkEatenWeight() {
+        // 20초 경과 후에 먹은 양 비교
+        if (eatenWeight <= 5.0) {
+            underEatDeath = -1;
+            System.out.println("일정 시간 내 먹은 양이 5 이하이므로 개복치가 죽였습니다.");
+        } else if (eatenWeight >= 20.0) {
+            overEatDeath = -1;
+            System.out.println("일정 시간 내 먹은 양이 20 이상이므로 개복치가 죽었습니다.");
+        }
+
+        // 먹은 양 초기화
+        eatenWeight = 0.0;
     }
 
     public static void main(String[] args) {
