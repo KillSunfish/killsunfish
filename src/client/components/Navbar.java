@@ -42,10 +42,14 @@ public class Navbar extends JPanel {
     }
 
     // 주황색 칸의 너비를 설정하는 메서드
-    public void setOrangeWidth(int width) {
-        this.orangeWidth += width;
-        if (this.orangeWidth >= 1120) {
-            this.orangeWidth = 0;
+    public void setOrangeWidth(double weightIncrease) {
+        int maxOrangeWidth = 1130; // 주황색 칸의 최대 너비
+        int maxWidthPerKg = maxOrangeWidth / 10; // 10kg에 해당하는 최대 너비
+        int increaseWidth = (int) (maxWidthPerKg * weightIncrease); // 먹이 무게에 따른 주황색 칸의 증가 너비 계산
+
+        this.orangeWidth += increaseWidth;
+        if (this.orangeWidth >= maxOrangeWidth) {
+            this.orangeWidth = maxOrangeWidth;
         }
         repaint(); // 그래픽을 다시 그리도록 호출
     }
