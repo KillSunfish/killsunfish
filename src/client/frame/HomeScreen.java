@@ -117,8 +117,8 @@ public class HomeScreen extends JComponent {
             }
         });
 
-        // 일정 시간 동안 먹은 양이 기준치를 초과할 때 죽는 기능을 위한 20초 타이머
-        Timer checkEatenWeightTimer = new Timer(20000, (e) -> {
+        // 일정 시간 동안 먹은 양이 기준치를 초과할 때 죽는 기능을 위한 30초 타이머
+        Timer checkEatenWeightTimer = new Timer(30000, (e) -> {
             checkEatenWeight();
         });
         checkEatenWeightTimer.start();
@@ -350,7 +350,7 @@ public class HomeScreen extends JComponent {
     }
 
     private void checkEatenWeight() {
-        // 20초 경과 후에 먹은 양 비교
+        // 30초 경과 후에 먹은 양 비교
         if (eatenWeight <= 2.0) {
             underEatDeath = -1;
             frontController.sunfishDiesByCode(3);
