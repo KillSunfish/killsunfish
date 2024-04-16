@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 
+import server.VO.UserVO;
 import client.components.Navbar;
 import client.components.CustomButton;
 import client.components.StarFish;
@@ -16,7 +17,6 @@ import client.components.ShellFish;
 import client.components.Octopus;
 import client.components.Crab;
 import client.components.RottenFish;
-import client.components.ShellFish;
 
 public class HomeScreen extends JFrame {
     private static final String INGAME_BACKGROUND_PATH = "src/client/assets/ingame_background.png";
@@ -38,11 +38,11 @@ public class HomeScreen extends JFrame {
     private RottenFish rottenfish;
 
     private double temperature = 20.0;
-    private int weight = 30;
+    private double weight = 0.1; // 초기 weight 값
     private int tempDeath = 0; // 온도차로 사망할 때
     private int touchDeath = 0;  // 많이 만져서 사망할 때
 
-    public HomeScreen() {
+    public HomeScreen(UserVO userVO) {
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
         navbar = new Navbar();
         setTitle("Sunfish Game");
@@ -82,47 +82,87 @@ public class HomeScreen extends JFrame {
             }
         });
 
+        octopus.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                increaseWeightAndMoveSunfish(octopus, 0.6);
+            }
+        });
+
+        shellFish = new ShellFish(-10, -10);
+        shellFish.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                increaseWeightAndMoveSunfish(shellFish, 0.2);
+            }
+        });
+
+        starfish = new StarFish(1,1);
+        crab = new Crab(5,5);
+        shrimp = new Shrimp(15,15);
+
+        // Shrimp, ShellFish, Octopus, Crab, StarFish 객체의 MouseListener를 한 번에 추가
+        MouseAdapter foodMouseListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Component foodComponent = (Component) e.getSource();
+                if (foodComponent instanceof Shrimp) {
+                    increaseWeightAndMoveSunfish(foodComponent, 0.35);
+                } else if (foodComponent instanceof ShellFish) {
+                    increaseWeightAndMoveSunfish(foodComponent, 0.2);
+                } else if (foodComponent instanceof Octopus) {
+                    increaseWeightAndMoveSunfish(foodComponent, 0.6);
+                } else if (foodComponent instanceof Crab) {
+                    increaseWeightAndMoveSunfish(foodComponent, 0.3);
+                } else if (foodComponent instanceof StarFish) {
+                    increaseWeightAndMoveSunfish(foodComponent, 0.25);
+                }
+            }
+        };
+
+        shrimp.addMouseListener(foodMouseListener);
+        shellFish.addMouseListener(foodMouseListener);
+        octopus.addMouseListener(foodMouseListener);
+        crab.addMouseListener(foodMouseListener);
+        starfish.addMouseListener(foodMouseListener);
+
         add(backgroundLabel);
         backgroundLabel.add(sunfish);
         backgroundLabel.add(octopus);
         backgroundLabel.add(crab);
-    }
-
-
-        // Add background label to the frame
-        add(backgroundLabel);
-
+        backgroundLabel.add(shrimp);
+        backgroundLabel.add(shellFish);
+        backgroundLabel.add(starfish);
 
         octopus.startMoving();
         crab.startMoving();
+        shrimp.startMoving();
+        shellFish.startMoving();
+        starfish.startMoving();
 
         for (int i = 0; i < 5; i++) {
-            RottenFish rottenFish = new RottenFish(5, 5); // 움직임 설정
+            RottenFish rottenFish = new RottenFish(5, 5);
             backgroundLabel.add(rottenFish);
             rottenFish.startMoving();
         }
 
-        for (int i = 0; i < 3; i++) {
-            StarFish starfish = new StarFish(1,1); // 움직임 설정
-            backgroundLabel.add(starfish);
-            starfish.startMoving();
-        }
+        navbar.setWeight(userVO.getWeight());
+    }
 
-        for (int i = 0; i < 2; i++) {
-            Shrimp shrimp = new Shrimp(15,15); // 움직임 설정
-            ShellFish shellFish = new ShellFish(-10, -10);
-            backgroundLabel.add(shrimp);
-            backgroundLabel.add(shellFish);
-            shrimp.startMoving();
-            shellFish.startMoving();
-        }
+    private void increaseWeightAndMoveSunfish(Component foodComponent, double weightIncrease) {
+        weight += weightIncrease;
+        navbar.setWeight(weight);
+
+        sunfish.setLocation(foodComponent.getX(), foodComponent.getY());
+        foodComponent.setVisible(false);
+    }
 
     private void addBtnPlusActionListener(CustomButton btn) {
         ActionListener actionListener = (e) -> {
             temperature += 1;
             updateTemperatureLabel();
             checkTemperatureRange();
-            navbar.setOrangeWidth((int) weight * 10); // 온도에 따라 주황색 칸의 너비 변경
+            navbar.setOrangeWidth((int) weight * 10);
         };
 
         btn.addActionListener(actionListener);
@@ -133,7 +173,7 @@ public class HomeScreen extends JFrame {
             temperature -= 1;
             updateTemperatureLabel();
             checkTemperatureRange();
-            navbar.setOrangeWidth((int) weight * 100); // 온도에 따라 주황색 칸의 너비 변경
+            navbar.setOrangeWidth((int) weight * 100);
         };
 
         btn.addActionListener(actionListener);
@@ -143,18 +183,17 @@ public class HomeScreen extends JFrame {
         lbl_temperature.setText("" + String.format("%.1f", temperature) + "°C");
     }
 
-    // 25도 초과, 15도 미만일 때 사망.
     private void checkTemperatureRange() {
         if (temperature < 15 || temperature > 25) {
-            tempDeath = -1; // 새로운 변수 초기화
+            tempDeath = -1;
             System.out.println("온도가 15도 미만이거나 25도를 초과하여 개복치가 죽었습니다.: " + tempDeath);
         }
-
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            HomeScreen homeScreen = new HomeScreen();
+            UserVO userVO = new UserVO();
+            HomeScreen homeScreen = new HomeScreen(userVO);
             homeScreen.setVisible(true);
         });
     }
