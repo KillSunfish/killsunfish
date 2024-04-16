@@ -1,6 +1,6 @@
 package server.controller;
 import server.dao.UserDao;
-import server.user.User;
+import server.VO.UserVO;
 
 public class UserController {
     private UserDao userDao;
@@ -12,9 +12,8 @@ public class UserController {
 
     public boolean signUp(String id, String password, String sunfishName) {
         return(userDao.signUp(new User(id, password, sunfishName)));
-    }
 
-    public User login(String id, String password) {
+    public UserVO login(String id, String password) {
         return userDao.login(id, password);
     }
 

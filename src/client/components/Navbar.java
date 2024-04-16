@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Navbar extends JPanel {
+    private int orangeWidth = 30; // 주황색 칸의 너비
+    private double weight = 0.1; // 무게
 
     public Navbar() {
         setPreferredSize(new Dimension(1280, 50)); // Navbar의 크기 설정
@@ -27,12 +29,35 @@ public class Navbar extends JPanel {
         g2d.setColor(Color.BLACK);
         g2d.fillRect(10, 75, 1130, 28);
 
+        // 주황색 칸 그리기
+        g2d.setColor(Color.ORANGE);
+        g2d.fillRect(10, 75, orangeWidth, 28);
         // 텍스트 그리기
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 50)); // 폰트 설정
         g2d.drawString("LV.1 : 개복치", 20, 55); // 텍스트 그리기
 
-        g2d.drawString("0.3KG", 980, 55); // 텍스트 그리기
+        // Weight 값 표시
+        g2d.drawString(String.format("%.1f", weight) + "KG", 980, 55); // 텍스트 그리기
+    }
 
+    // 주황색 칸의 너비를 설정하는 메서드
+    public void setOrangeWidth(int width) {
+        this.orangeWidth += width;
+        if (this.orangeWidth >= 1120) {
+            this.orangeWidth = 0;
+        }
+        repaint(); // 그래픽을 다시 그리도록 호출
+    }
+
+    // Weight 값을 설정하는 메서드
+    public void setWeight(double weight) {
+        this.weight = weight;
+        repaint(); // 그래픽을 다시 그리도록 호출
+    }
+
+    // Weight 값을 반환하는 메서드
+    public double getWeight() {
+        return weight;
     }
 }
