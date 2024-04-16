@@ -39,7 +39,7 @@ public class HomeScreen extends JFrame {
     private RottenFish rottenfish1, rottenfish2, rottenfish3, rottenfish4, rottenfish5;
 
     private double temperature = 20.0;
-    private double weight = 0.1; // 초기 weight 값
+    private double weight = 0.0; // 초기 weight 값
     private int tempDeath = 0; // 온도차로 사망할 때
     private int touchDeath = 0;  // 많이 만져서 사망할 때
     private Timer clickTimer; // 타이머 변수 선언
@@ -55,22 +55,23 @@ public class HomeScreen extends JFrame {
         setSize(1280, 960);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
-        navbar.setBounds(65, 40, 1150, 110);
+
+        navbar.setBounds(130, 40, 1020, 110);
         add(navbar);
 
         btn_plus = new CustomButton("+");
-        btn_plus.setBounds(1080, 180, 60, 40);
+        btn_plus.setBounds(1020, 180, 60, 40);
         addBtnPlusActionListener(btn_plus);
         add(btn_plus);
 
         btn_minus = new CustomButton("-");
-        btn_minus.setBounds(1150, 180, 60, 40);
+        btn_minus.setBounds(1090, 180, 60, 40);
         addBtnMinusActionListener(btn_minus);
         add(btn_minus);
 
         lbl_temperature = new JLabel("" + temperature + "°C");
         lbl_temperature.setFont(new Font("Arial", Font.BOLD, 30));
-        lbl_temperature.setBounds(1120, 150, 200, 30);
+        lbl_temperature.setBounds(1050, 150, 200, 30);
         add(lbl_temperature);
 
         JLabel backgroundLabel = new JLabel(backgroundImage);
@@ -92,21 +93,7 @@ public class HomeScreen extends JFrame {
             }
         });
 
-        octopus.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                increaseWeightAndMoveSunfish(octopus, 0.6);
-            }
-        });
-
         shellFish = new ShellFish(-10, -10);
-        shellFish.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                increaseWeightAndMoveSunfish(shellFish, 0.2);
-            }
-        });
-
         starfish1 = new StarFish(1, 1);
         starfish2 = new StarFish(1, 1);
         starfish3 = new StarFish(1, 1);
@@ -123,8 +110,8 @@ public class HomeScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 Component foodComponent = (Component) e.getSource();
                 if (foodComponent instanceof Shrimp) {
-                    increaseWeightAndMoveSunfish(foodComponent, 0.35);
-                    navbar.setOrangeWidth(0.35);
+                    increaseWeightAndMoveSunfish(foodComponent, 0.3);
+                    navbar.setOrangeWidth(0.3);
                 } else if (foodComponent instanceof ShellFish) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.2);
                     navbar.setOrangeWidth(0.2);
@@ -132,11 +119,11 @@ public class HomeScreen extends JFrame {
                     increaseWeightAndMoveSunfish(foodComponent, 0.6);
                     navbar.setOrangeWidth(0.6);
                 } else if (foodComponent instanceof Crab) {
-                    increaseWeightAndMoveSunfish(foodComponent, 0.3);
-                    navbar.setOrangeWidth(0.3);
+                    increaseWeightAndMoveSunfish(foodComponent, 5);
+                    navbar.setOrangeWidth(5);
                 } else if (foodComponent instanceof StarFish) {
-                    increaseWeightAndMoveSunfish(foodComponent, 0.25);
-                    navbar.setOrangeWidth(0.25);
+                    increaseWeightAndMoveSunfish(foodComponent, 5);
+                    navbar.setOrangeWidth(5);
                 }
 
                 // 모든 먹이가 없어졌을 때 다시 보이도록 설정
@@ -230,6 +217,7 @@ public class HomeScreen extends JFrame {
     }
 
     private void increaseWeightAndMoveSunfish(Component foodComponent, double weightIncrease) {
+        System.out.println(weightIncrease);
         weight += weightIncrease;
         navbar.setWeight(weight);
 
