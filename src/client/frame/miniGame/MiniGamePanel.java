@@ -18,7 +18,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
     private ImageIcon backgroundImage;
     private Sunfish sunfish;
     private ArrayList<Shark> sharks;
-    private int sunfishSpeed = 10;
+    private int sunfishSpeed = 7;
     private Timer countTimer;
     private Timer gameTimer;
     private JLabel timerLabel;
@@ -27,7 +27,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
 
     private int gameTimeRemaining;
 
-    public MiniGamePanel(HomeScreen homeScreen, Navbar navbar) {
+    public MiniGamePanel(HomeScreen homeScreen, Navbar navbar, JLabel backgroundLabel) {
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
         setLayout(null);
 
@@ -69,13 +69,17 @@ public class MiniGamePanel extends JPanel implements ActionListener {
                     gameTimeRemaining--;
                     updateTimerLabel();
                 } else {
-                    // 메뉴로 돌아가기
-                    // 몸무게 증량
+                    backgroundLabel.setVisible(true);
+                    gameDeadPanel.setVisible(false);
+                    setVisible(false);
+                    sunfish.getNavbar().setOrangeWidth(0.05);
+                    double weight = sunfish.getNavbar().getWeight();
+                    sunfish.getNavbar().setWeight(weight + 5.0);
                 }
             }
         });
 
-        gameDeadPanel = new MiniGameDeadPanel(homeScreen);
+        gameDeadPanel = new MiniGameDeadPanel(backgroundLabel);
         gameDeadPanel.setVisible(false);
         add(gameDeadPanel);
     }
@@ -87,6 +91,23 @@ public class MiniGamePanel extends JPanel implements ActionListener {
         for (Shark shark : sharks) {
             shark.draw(g);
         }
+    }
+
+    public void initializeGame() {
+        gameDeadPanel.setVisible(false);
+        // 타이머 중지
+        countTimer.stop();
+        gameTimer.stop();
+        sharkTimer.stop();
+
+        // 게임 상태 초기화
+        startButton.setVisible(true);
+        timerLabel.setVisible(false);
+
+        sunfish.resetPosition();
+
+        sunfish.setVisible(true);
+        sharks.clear(); // 상어 리스트 초기화
     }
 
     @Override
@@ -137,14 +158,8 @@ public class MiniGamePanel extends JPanel implements ActionListener {
                     sharks.remove(i);
                     i--;
                 }
-                Rectangle sharkBounds = shark.getBounds();
-                Rectangle sunfishBounds = sunfish.getBounds();
 
-                int padding = 30; // 패딩 값 설정
-                sunfishBounds.setBounds(sunfishBounds.x + padding, sunfishBounds.y - padding,
-                        sunfishBounds.width - padding * 2, sunfishBounds.height - padding * 2);
-
-                if (sunfishBounds.intersects(sharkBounds)) {
+                if (sunfish.intersects(shark.getBounds())) {
                     gameOver();
                     return;
                 }
@@ -178,6 +193,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
     private void gameOver() {
         gameTimer.stop();
         sharkTimer.stop();
+        countTimer.stop();
         timerLabel.setVisible(false);
         add(gameDeadPanel);
         gameDeadPanel.setBounds(0, 0, getWidth(), getHeight());

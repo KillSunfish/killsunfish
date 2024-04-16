@@ -43,11 +43,6 @@ import java.io.IOException;
                     isMouseOver = false;
                     repaint();
                 }
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    homeScreen.showMiniGamePanel();
-                }
             });
         }
 
