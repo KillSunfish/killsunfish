@@ -12,7 +12,7 @@ public class UserVO {
         this.id = id;
         this.password = password;
         this.sunfishName = sunfishName;
-        this.weight = 0.1;
+        this.weight = 0.0;
         this.level = 1;
     }
 

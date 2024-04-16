@@ -123,8 +123,8 @@ public class HomeScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 Component foodComponent = (Component) e.getSource();
                 if (foodComponent instanceof Shrimp) {
-                    increaseWeightAndMoveSunfish(foodComponent, 0.35);
-                    navbar.setOrangeWidth(0.35);
+                    increaseWeightAndMoveSunfish(foodComponent, 0.3);
+                    navbar.setOrangeWidth(0.3);
                 } else if (foodComponent instanceof ShellFish) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.2);
                     navbar.setOrangeWidth(0.2);
@@ -135,8 +135,8 @@ public class HomeScreen extends JFrame {
                     increaseWeightAndMoveSunfish(foodComponent, 0.3);
                     navbar.setOrangeWidth(0.3);
                 } else if (foodComponent instanceof StarFish) {
-                    increaseWeightAndMoveSunfish(foodComponent, 0.25);
-                    navbar.setOrangeWidth(0.25);
+                    increaseWeightAndMoveSunfish(foodComponent, 0.2);
+                    navbar.setOrangeWidth(0.2);
                 }
 
                 // 모든 먹이가 없어졌을 때 다시 보이도록 설정
