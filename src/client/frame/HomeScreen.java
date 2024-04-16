@@ -98,6 +98,7 @@ public class HomeScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 increaseWeightAndMoveSunfish(octopus, 0.6);
+
             }
         });
 
@@ -120,14 +121,19 @@ public class HomeScreen extends JFrame {
                 Component foodComponent = (Component) e.getSource();
                 if (foodComponent instanceof Shrimp) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.35);
+                    navbar.setOrangeWidth(0.35);
                 } else if (foodComponent instanceof ShellFish) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.2);
+                    navbar.setOrangeWidth(0.2);
                 } else if (foodComponent instanceof Octopus) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.6);
+                    navbar.setOrangeWidth(0.6);
                 } else if (foodComponent instanceof Crab) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.3);
+                    navbar.setOrangeWidth(0.3);
                 } else if (foodComponent instanceof StarFish) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.25);
+                    navbar.setOrangeWidth(0.25);
                 }
             }
         };
