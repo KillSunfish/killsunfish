@@ -122,8 +122,9 @@ public class HomeScreen extends JFrame {
                     increaseWeightAndMoveSunfish(foodComponent, 5);
                     navbar.setOrangeWidth(5);
                 } else if (foodComponent instanceof StarFish) {
-                    increaseWeightAndMoveSunfish(foodComponent, 5);
-                    navbar.setOrangeWidth(5);
+
+                    increaseWeightAndMoveSunfish(foodComponent, 0.2);
+                    navbar.setOrangeWidth(0.2);
                 }
 
                 // 모든 먹이가 없어졌을 때 다시 보이도록 설정
