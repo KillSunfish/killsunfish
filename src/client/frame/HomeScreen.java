@@ -51,11 +51,10 @@ public class HomeScreen extends JFrame {
     private Timer clickTimer; // 타이머 변수 선언
     private int clickFish = 0;
     private final int RESET_INTERVAL = 5000; // 5초마다 초기화
+
     private int eatDeath = 0;
-    private int overEatDeath = 0;
-    private int underEatDeath = 0;
-    private double eatenWeight = 0.0; // 시간 내에 먹은 양
     private UserVO userVO;
+
 
     public HomeScreen(UserVO userVO) {
         this.userVO = userVO;
@@ -156,12 +155,6 @@ public class HomeScreen extends JFrame {
             }
         };
 
-        // 일정 시간 동안 먹은 양이 기준치를 초과할 때 죽는 기능을 위한 20초 타이머
-        Timer checkEatenWeightTimer = new Timer(20000, (e) -> {
-            checkEatenWeight();
-        });
-        checkEatenWeightTimer.start();
-
         shrimp1.addMouseListener(foodMouseListener);
         shrimp2.addMouseListener(foodMouseListener);
         shellFish.addMouseListener(foodMouseListener);
@@ -210,6 +203,31 @@ public class HomeScreen extends JFrame {
         backgroundLabel.add(octopus);
         backgroundLabel.add(crab1);
         backgroundLabel.add(crab2);
+
+        clickTimer = new Timer(RESET_INTERVAL, (e) -> {
+            clickFish = 0; // 클릭 횟수 초기화
+            System.out.println("클릭 횟수가 초기화되었습니다." + clickFish);
+        });
+        clickTimer.start();
+        backgroundLabel.add(shrimp1);
+        backgroundLabel.add(shrimp2);
+        backgroundLabel.add(shellFish);
+        backgroundLabel.add(starfish1);
+        backgroundLabel.add(starfish2);
+        backgroundLabel.add(starfish3);
+
+        octopus.startMoving();
+        crab1.startMoving();
+        crab2.startMoving();
+        shrimp1.startMoving();
+        shrimp2.startMoving();
+        shellFish.startMoving();
+        starfish1.startMoving();
+        starfish2.startMoving();
+        starfish3.startMoving();
+
+        navbar.setWeight(userVO.getWeight());
+
 
         MenuButton menuButton = new MenuButton(this);
         menuButton.setBounds(getWidth() - 160, getHeight() - 150, 130, 120);
@@ -265,9 +283,6 @@ public class HomeScreen extends JFrame {
 
         sunfish.setLocation(foodComponent.getX(), foodComponent.getY());
         foodComponent.setVisible(false);
-
-        // 먹은 양 누적
-        eatenWeight += weightIncrease;
     }
 
     private void addBtnPlusActionListener(CustomButton btn) {
@@ -301,19 +316,10 @@ public class HomeScreen extends JFrame {
         }
     }
 
-    private void checkEatenWeight() {
-        // 20초 경과 후에 먹은 양 비교
-        if (eatenWeight <= 5.0) {
-            underEatDeath = -1;
-            System.out.println("일정 시간 내 먹은 양이 5 이하이므로 개복치가 죽였습니다.");
-        } else if (eatenWeight >= 20.0) {
-            overEatDeath = -1;
-            System.out.println("일정 시간 내 먹은 양이 20 이상이므로 개복치가 죽었습니다.");
-        }
+    // public void updateSunfishLevel(int level) {
+    //     sunfish.updateImage(level);
+    // }
 
-        // 먹은 양 초기화
-        eatenWeight = 0.0;
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
