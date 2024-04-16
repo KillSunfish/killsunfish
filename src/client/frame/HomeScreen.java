@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import client.controller.FrontController;
 import server.VO.UserVO;
 import client.components.Navbar;
 import client.components.CustomButton;
@@ -22,7 +23,7 @@ import java.awt.event.ActionEvent;
 import client.frame.miniGame.MenuButton;
 import client.components.RottenFish;
 
-public class HomeScreen extends JFrame {
+public class HomeScreen extends JComponent {
     private static final String INGAME_BACKGROUND_PATH = "src/client/assets/ingame_background.png";
 //    private static final String SUNFISH_IMAGE_PATH = "src/client/assets/sunfish.jpg";
 
@@ -52,17 +53,22 @@ public class HomeScreen extends JFrame {
     private int clickFish = 0;
     private final int RESET_INTERVAL = 5000; // 5초마다 초기화
 
+    private FrontController frontController;
+
     private int eatDeath = 0;
     private UserVO userVO;
 
 
     public HomeScreen(UserVO userVO) {
         this.userVO = userVO;
+        System.out.println(userVO.getSunfishName());
+        frontController = FrontController.getInstance();
+
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
         navbar = new Navbar();
-        setTitle("Sunfish Game");
+//        setTitle("Sunfish Game");
         setSize(1280, 960);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
         // Create JLabel for background image
@@ -97,6 +103,8 @@ public class HomeScreen extends JFrame {
                 clickFish++;
                 if (clickFish > 7) {
                     touchDeath = -1;
+                    frontController.sunfishDiesByCode(5);
+
                     System.out.println("새로운 변수 클릭 횟수: " + clickFish + "번 만져서 개복치 사망");
                 } else {
                     System.out.println("새로운 변수 클릭 횟수: " + clickFish);
@@ -188,6 +196,7 @@ public class HomeScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 eatDeath = -1;
+                frontController.sunfishDiesByCode(1);
                 System.out.println("RottenFish를 클릭하여 개복치가 죽었습니다.: " + eatDeath);
             }
         };
@@ -276,6 +285,14 @@ public class HomeScreen extends JFrame {
         navbar.setWeight(userVO.getWeight());
     }
 
+    public void removeMiniGamePanel() {
+        backgroundLabel.setVisible(true);
+        miniGamePanel.setVisible(false);
+
+        showMiniGamePanel();
+        repaint();
+    }
+
     private void increaseWeightAndMoveSunfish(Component foodComponent, double weightIncrease) {
         System.out.println(weightIncrease);
         weight += weightIncrease;
@@ -312,20 +329,22 @@ public class HomeScreen extends JFrame {
     private void checkTemperatureRange() {
         if (temperature < 15 || temperature > 25) {
             tempDeath = -1;
+            frontController.sunfishDiesByCode(6);
             System.out.println("온도가 15도 미만이거나 25도를 초과하여 개복치가 죽었습니다.: " + tempDeath);
         }
     }
 
-    // public void updateSunfishLevel(int level) {
-    //     sunfish.updateImage(level);
-    // }
+//     public void updateSunfishLevel(int level) {
+//         sunfish.updateImage(level);
+//     }
 
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            UserVO userVO = new UserVO();
-            HomeScreen homeScreen = new HomeScreen(userVO);
-            homeScreen.setVisible(true);
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            UserVO userVO = new UserVO();
+//            HomeScreen homeScreen = new HomeScreen(userVO);
+//            homeScreen.setVisible(true);
+//        });
+//    }
 }
+

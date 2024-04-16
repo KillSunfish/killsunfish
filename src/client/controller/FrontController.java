@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.components.DeathPageComponent;
+import client.components.LevelupPageComponent;
 import client.frame.HomeScreen;
 import client.frame.MainView;
 import server.VO.UserVO;
@@ -48,5 +49,13 @@ public class FrontController {
 
     public void returnToMainPage() {
         mainView.switchView("main", null);
+    }
+
+    public void returnToHomePage() {
+        mainView.switchView("mainGameFinished", null);
+    }
+
+    public void onSunfishLevelUp(int level) {
+        mainView.setOverlay(new LevelupPageComponent(level));
     }
 }
