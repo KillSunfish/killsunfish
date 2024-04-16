@@ -42,6 +42,8 @@ public class HomeScreen extends JFrame {
     private int tempDeath = 0; // 온도차로 사망할 때
     private int touchDeath = 0;  // 많이 만져서 사망할 때
 
+    private int eatDeath = 0;
+
     public HomeScreen(UserVO userVO) {
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
         navbar = new Navbar();
@@ -117,6 +119,15 @@ public class HomeScreen extends JFrame {
                 } else if (foodComponent instanceof StarFish) {
                     increaseWeightAndMoveSunfish(foodComponent, 0.25);
                 }
+
+                // 모든 먹이가 없어졌을 때 다시 보이도록 설정
+                if (!shrimp.isVisible() && !shellFish.isVisible() && !octopus.isVisible() && !crab.isVisible() && !starfish.isVisible()) {
+                    shrimp.setVisible(true);
+                    shellFish.setVisible(true);
+                    octopus.setVisible(true);
+                    crab.setVisible(true);
+                    starfish.setVisible(true);
+                }
             }
         };
 
@@ -125,6 +136,19 @@ public class HomeScreen extends JFrame {
         octopus.addMouseListener(foodMouseListener);
         crab.addMouseListener(foodMouseListener);
         starfish.addMouseListener(foodMouseListener);
+
+        rottenfish = new RottenFish(5, 5);
+        backgroundLabel.add(rottenfish);
+        rottenfish.startMoving();
+
+        // RottenFish를 클릭하면 개복치가 죽음
+        rottenfish.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                eatDeath = -1;
+                System.out.println("RottenFish를 클릭하여 개복치가 죽었습니다.: " + eatDeath);
+            }
+        });
 
         add(backgroundLabel);
         backgroundLabel.add(sunfish);
@@ -139,12 +163,6 @@ public class HomeScreen extends JFrame {
         shrimp.startMoving();
         shellFish.startMoving();
         starfish.startMoving();
-
-        for (int i = 0; i < 5; i++) {
-            RottenFish rottenFish = new RottenFish(5, 5);
-            backgroundLabel.add(rottenFish);
-            rottenFish.startMoving();
-        }
 
         navbar.setWeight(userVO.getWeight());
     }
