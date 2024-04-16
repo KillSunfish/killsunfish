@@ -21,14 +21,14 @@ import client.components.RottenFish;
 
 public class HomeScreen extends JFrame {
     private static final String INGAME_BACKGROUND_PATH = "src/client/assets/ingame_background.png";
-    private static final String SUNFISH_IMAGE_PATH = "src/client/assets/sunfish.jpg";
+//    private static final String SUNFISH_IMAGE_PATH = "src/client/assets/sunfish.jpg";
 
     private ImageIcon backgroundImage;
     private Navbar navbar;
     private CustomButton btn_plus;
     private CustomButton btn_minus;
     private JLabel lbl_temperature;
-    private Sunfish sunfish;
+    public Sunfish sunfish;
     private Shrimp shrimp1, shrimp2;
 
     private ShellFish shellFish;
@@ -77,7 +77,7 @@ public class HomeScreen extends JFrame {
         JLabel backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setBounds(0, -100, getWidth(), getHeight());
 
-        sunfish = new Sunfish();
+        sunfish = new Sunfish(navbar);
         octopus = new Octopus(-250, -250);
 
         sunfish.addMouseListener(new MouseAdapter() {
@@ -116,15 +116,15 @@ public class HomeScreen extends JFrame {
                     increaseWeightAndMoveSunfish(foodComponent, 0.2);
                     navbar.setOrangeWidth(0.2);
                 } else if (foodComponent instanceof Octopus) {
-                    increaseWeightAndMoveSunfish(foodComponent, 0.6);
-                    navbar.setOrangeWidth(0.6);
+                    increaseWeightAndMoveSunfish(foodComponent, 1);
+                    navbar.setOrangeWidth(1);
                 } else if (foodComponent instanceof Crab) {
-                    increaseWeightAndMoveSunfish(foodComponent, 5);
-                    navbar.setOrangeWidth(5);
+                    increaseWeightAndMoveSunfish(foodComponent, 0.4);
+                    navbar.setOrangeWidth(0.4);
                 } else if (foodComponent instanceof StarFish) {
 
-                    increaseWeightAndMoveSunfish(foodComponent, 0.2);
-                    navbar.setOrangeWidth(0.2);
+                    increaseWeightAndMoveSunfish(foodComponent, 0.3);
+                    navbar.setOrangeWidth(0.3);
                 }
 
                 // 모든 먹이가 없어졌을 때 다시 보이도록 설정
@@ -231,7 +231,6 @@ public class HomeScreen extends JFrame {
             temperature += 1;
             updateTemperatureLabel();
             checkTemperatureRange();
-            navbar.setOrangeWidth((int) weight * 10);
         };
 
         btn.addActionListener(actionListener);
@@ -242,7 +241,6 @@ public class HomeScreen extends JFrame {
             temperature -= 1;
             updateTemperatureLabel();
             checkTemperatureRange();
-            navbar.setOrangeWidth((int) weight * 100);
         };
 
         btn.addActionListener(actionListener);
