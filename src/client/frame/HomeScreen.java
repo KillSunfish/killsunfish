@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
 
 import client.components.Navbar;
 import client.components.CustomButton;
@@ -36,6 +38,9 @@ public class HomeScreen extends JFrame {
     private int weight = 30;
     private int tempDeath = 0; // 온도차로 사망할 때
     private int touchDeath = 0;  // 많이 만져서 사망할 때
+    private Timer clickTimer; // 타이머 변수 선언
+    private int clickFish = 0;
+    private final int RESET_INTERVAL = 5000; // 5초마다 초기화
 
     public HomeScreen() {
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
@@ -75,8 +80,15 @@ public class HomeScreen extends JFrame {
         sunfish.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                touchDeath++;
-                System.out.println("새로운 변수 클릭 횟수: " + touchDeath);
+                clickFish++;
+                if (clickFish>7){
+                    touchDeath = -1;
+                    System.out.println("새로운 변수 클릭 횟수: " + clickFish+ "번 만져서 개복치 사망");
+                }
+                else{
+                    System.out.println("새로운 변수 클릭 횟수: " + clickFish);
+                }
+
             }
         });
 
@@ -87,6 +99,12 @@ public class HomeScreen extends JFrame {
         backgroundLabel.add(starfish);
         backgroundLabel.add(octopus);
         backgroundLabel.add(crab);
+
+        clickTimer = new Timer(RESET_INTERVAL, (e) -> {
+            clickFish = 0; // 클릭 횟수 초기화
+            System.out.println("클릭 횟수가 초기화되었습니다."+clickFish);
+        });
+        clickTimer.start();
     }
 
     private void addBtnPlusActionListener(CustomButton btn) {

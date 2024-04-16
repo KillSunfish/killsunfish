@@ -35,7 +35,6 @@ public class Navbar extends JPanel {
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 50)); // 폰트 설정
         g2d.drawString("LV.1 : 개복치", 20, 55); // 텍스트 그리기
-
         g2d.drawString("0.3KG", 980, 55); // 텍스트 그리기
 
     }
