@@ -3,6 +3,7 @@ package client.components;
 import javax.swing.*;
 import java.awt.*;
 import client.components.Sunfish;
+import client.controller.FrontController;
 
 public class Navbar extends JPanel {
     private int orangeWidth = 0; // 주황색 칸의 너비
@@ -10,7 +11,10 @@ public class Navbar extends JPanel {
     private int level = 1; // 레벨
     private Sunfish sunfish;
 
+    private FrontController frontController;
+
     public Navbar() {
+        frontController = FrontController.getInstance();
         setPreferredSize(new Dimension(1280, 50)); // Navbar의 크기 설정
         setBackground(Color.GRAY); // 배경색 설정
     }
@@ -70,7 +74,8 @@ public class Navbar extends JPanel {
     }
     // 레벨을 증가시키는 메서드
     private void levelUp() {
-        level++;
+        frontController.onSunfishLevelUp(++level);
+//        level++;
     }
 
 }

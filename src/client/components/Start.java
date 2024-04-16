@@ -32,7 +32,7 @@ public class Start extends JComponent {
         btn_signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainView.switchView("signIn");
+                mainView.switchView("signIn", null);
             }
         });
 
@@ -44,7 +44,7 @@ public class Start extends JComponent {
         btn_signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainView.switchView("signUp");
+                mainView.switchView("signUp", null);
             }
         });
 

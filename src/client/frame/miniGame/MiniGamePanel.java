@@ -3,6 +3,7 @@ package client.frame.miniGame;
 import client.components.Navbar;
 import client.components.Sunfish;
 import client.components.Shark;
+import client.controller.FrontController;
 import client.frame.HomeScreen;
 
 import javax.swing.*;
