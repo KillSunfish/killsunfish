@@ -3,42 +3,119 @@ package client.components;
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.image.BufferedImage;
+
 public class Sunfish extends JLabel {
-    private static final String[] SUNFISH_IMAGE_PATHS = {
-            "src/client/assets/sunfish.jpg",    // Level 1 image path
-            "src/client/assets/sunfish_2.jpg"   // Level 2 image path
-    };
+    private static final String SUNFISH_IMAGE_PATH = "src/client/assets/sunfish.jpg";
+    private static final String SUNFISH2_IMAGE_PATH = "src/client/assets/sunfish_2.jpg";
+    private static final String SUNFISH3_IMAGE_PATH = "src/client/assets/sunfish_3.jpg";
+    private static final String SUNFISH4_IMAGE_PATH = "src/client/assets/sunfish_4.jpg";
 
-    private static final int SUNFISH_WIDTH = 100; // Image width
-    private static final int SUNFISH_HEIGHT = 100; // Image height
+    private static final int SUNFISH_WIDTH = 100;
+    private static final int SUNFISH_HEIGHT = 100;
 
-    private ImageIcon[] sunfishImages;
+    private ImageIcon sunfishImage;
+    private int x;
+    private int y;
+    private boolean isFlipped = false; // 좌우 반전 여부
+    private Navbar navbar;
 
-    public Sunfish() {
-        // Load all images
-        sunfishImages = new ImageIcon[SUNFISH_IMAGE_PATHS.length];
-        for (int i = 0; i < SUNFISH_IMAGE_PATHS.length; i++) {
-            ImageIcon originalImageIcon = new ImageIcon(SUNFISH_IMAGE_PATHS[i]);
-            Image originalImage = originalImageIcon.getImage();
-            Image scaledImage = originalImage.getScaledInstance(SUNFISH_WIDTH, SUNFISH_HEIGHT, Image.SCALE_SMOOTH);
-            sunfishImages[i] = new ImageIcon(scaledImage);
-        }
+    public Sunfish(Navbar navbar) {
+        this.navbar = navbar; // Navbar 객체를 전달받아 필드에 저장
 
-        // Set default image (level 1)
-        setIcon(sunfishImages[0]);
+        ImageIcon originalImageIcon = new ImageIcon(SUNFISH_IMAGE_PATH);
+        Image originalImage = originalImageIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(SUNFISH_WIDTH, SUNFISH_HEIGHT, Image.SCALE_SMOOTH);
+        sunfishImage = new ImageIcon(scaledImage);
+
+        setIcon(sunfishImage);
 
         // Set bounds for Sunfish label to position it
-        int x = (1280 - SUNFISH_WIDTH) / 2; // Horizontal center alignment
-        int y = (960 - SUNFISH_HEIGHT) / 2; // Vertical center alignment
-        setBounds(x, y, SUNFISH_WIDTH, SUNFISH_HEIGHT);
+        x = (1280 - sunfishImage.getIconWidth()) / 2; // 가로 중앙 정렬
+        y = (980 - sunfishImage.getIconHeight()) / 2; // 세로 중앙 정렬
+        setBounds(x, y, sunfishImage.getIconWidth(), sunfishImage.getIconHeight());
+
+        Timer timer = new Timer(1000, e -> updateSunfishImage());
+        timer.start();
     }
 
-    // Method to update Sunfish image based on level
-    public void updateImage(int level) {
-        if (level >= 1 && level <= SUNFISH_IMAGE_PATHS.length) {
-            setIcon(sunfishImages[level - 1]); // Level starts from 1, array index starts from 0
+    public void updateSunfishImage() {
+        double weight = navbar.getWeight();
+        if (weight < 10.0) {
+            setSunfishImage(SUNFISH_IMAGE_PATH);
+        } else if (weight < 20.0) {
+            setSunfishImage(SUNFISH2_IMAGE_PATH);
+        } else if (weight < 30.0) {
+            setSunfishImage(SUNFISH3_IMAGE_PATH);
         } else {
-            System.out.println("Invalid level: " + level);
+            setSunfishImage(SUNFISH4_IMAGE_PATH);
         }
     }
+
+    private void setSunfishImage(String imagePath) {
+        ImageIcon originalImageIcon = new ImageIcon(imagePath);
+        Image originalImage = originalImageIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(SUNFISH_WIDTH, SUNFISH_HEIGHT, Image.SCALE_SMOOTH);
+        sunfishImage = new ImageIcon(scaledImage);
+
+        setIcon(sunfishImage);
+    }
+
+    public void flipImage() {
+        if (!isFlipped) {
+            sunfishImage.setImage(createFlippedImage(sunfishImage.getImage()));
+            isFlipped = true;
+        } else {
+            sunfishImage.setImage(createFlippedImage(sunfishImage.getImage()));
+            isFlipped = false;
+        }
+        repaint();
+    }
+
+    private Image createFlippedImage(Image image) {
+        int width = image.getWidth(null);
+        int height = image.getHeight(null);
+        BufferedImage flippedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = flippedImage.createGraphics();
+        g2d.drawImage(image, width, 0, -width, height, null);
+        g2d.dispose();
+        return flippedImage;
+    }
+
+    public boolean isFlipped() {
+        return isFlipped;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(sunfishImage.getImage(), 0, 0, getWidth(), getHeight(), this);
+    }
+
+    // 위로 이동하는 메서드
+    public void moveUp(int distance) {
+        y = Math.max(y - distance, 0);
+        setLocation(x, y);
+    }
+
+    // 아래로 이동하는 메서드
+    public void moveDown(int distance) {
+        int bottomBound = getParent().getHeight() - getHeight();
+        y = Math.min(y + distance, bottomBound-70);
+        setLocation(x, y);
+    }
+
+    // 왼쪽으로 이동하는 메서드
+    public void moveLeft(int distance) {
+        x = Math.max(x - distance, 0);
+        setLocation(x, y);
+    }
+
+    // 오른쪽으로 이동하는 메서드
+    public void moveRight(int distance) {
+        int rightBound = getParent().getWidth() - getWidth();
+        x = Math.min(x + distance, rightBound);
+        setLocation(x, y);
+    }
+
 }

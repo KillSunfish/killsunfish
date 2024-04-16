@@ -2,11 +2,13 @@ package client.components;
 
 import javax.swing.*;
 import java.awt.*;
+import client.components.Sunfish;
 
 public class Navbar extends JPanel {
     private int orangeWidth = 0; // 주황색 칸의 너비
     private double weight = 0.1; // 무게
     private int level = 1; // 레벨
+    private Sunfish sunfish;
 
     public Navbar() {
         setPreferredSize(new Dimension(1280, 50)); // Navbar의 크기 설정
