@@ -114,7 +114,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            gameTimeRemaining = 5;
+            gameTimeRemaining = 30;
             updateTimerLabel();
             countTimer.start();
             startButton.setVisible(false);
