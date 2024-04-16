@@ -57,6 +57,9 @@ public class HomeScreen extends JComponent {
     private FrontController frontController;
 
     private int eatDeath = 0;
+    private int overEatDeath = 0;
+    private int underEatDeath = 0;
+    private double eatenWeight = 0.0; // 시간 내에 먹은 양
     private UserVO userVO;
 
 
@@ -113,6 +116,12 @@ public class HomeScreen extends JComponent {
                 }
             }
         });
+
+        // 일정 시간 동안 먹은 양이 기준치를 초과할 때 죽는 기능을 위한 20초 타이머
+        Timer checkEatenWeightTimer = new Timer(20000, (e) -> {
+            checkEatenWeight();
+        });
+        checkEatenWeightTimer.start();
 
         shellFish = new ShellFish(-10, -10);
         starfish1 = new StarFish(3, 3);
@@ -303,6 +312,9 @@ public class HomeScreen extends JComponent {
 
         sunfish.setLocation(foodComponent.getX(), foodComponent.getY());
         foodComponent.setVisible(false);
+
+        // 먹은 양 누적
+        eatenWeight += weightIncrease;
     }
 
     private void addBtnPlusActionListener(CustomButton btn) {
@@ -337,10 +349,25 @@ public class HomeScreen extends JComponent {
         }
     }
 
+    private void checkEatenWeight() {
+        // 20초 경과 후에 먹은 양 비교
+        if (eatenWeight <= 2.0) {
+            underEatDeath = -1;
+            frontController.sunfishDiesByCode(3);
+            System.out.println("일정 시간 내 먹은 양이 2 이하이므로 개복치가 죽었습니다.");
+        } else if (eatenWeight >= 20.0) {
+            overEatDeath = -1;
+            frontController.sunfishDiesByCode(2);
+            System.out.println("일정 시간 내 먹은 양이 20 이상이므로 개복치가 죽었습니다.");
+        }
+
+        // 먹은 양 초기화
+        eatenWeight = 0.0;
+    }
+
 //    public void updateSunfishLevel(int level) {
 //        sunfish.updateImage(level);
 //    }
-
 
 //    public static void main(String[] args) {
 //        SwingUtilities.invokeLater(() -> {
