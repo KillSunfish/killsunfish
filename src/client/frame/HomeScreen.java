@@ -53,8 +53,11 @@ public class HomeScreen extends JFrame {
     private final int RESET_INTERVAL = 5000; // 5초마다 초기화
 
     private int eatDeath = 0;
+    private UserVO userVO;
+
 
     public HomeScreen(UserVO userVO) {
+        this.userVO = userVO;
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
         navbar = new Navbar();
         setTitle("Sunfish Game");
@@ -203,19 +206,25 @@ public class HomeScreen extends JFrame {
         MenuButton menuButton = new MenuButton(this);
         menuButton.setBounds(getWidth() - 160, getHeight() - 150, 130, 120);
         backgroundLabel.add(menuButton);
-
         add(backgroundLabel);
 
-        miniGamePanel = new MiniGamePanel(this);
+        menuButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backgroundLabel.setVisible(false);
+                miniGamePanel.setVisible(true);
+            }
+        });
+
+
+        miniGamePanel = new MiniGamePanel(this, navbar);
         miniGamePanel.setBounds(0, 0, getWidth(), getHeight());
         miniGamePanel.setVisible(false);
-
         add(miniGamePanel);
+
     }
 
     public void showMiniGamePanel() {
-        backgroundLabel.setVisible(false);
-        miniGamePanel.setVisible(true);
         clickTimer = new Timer(RESET_INTERVAL, (e) -> {
             clickFish = 0; // 클릭 횟수 초기화
             System.out.println("클릭 횟수가 초기화되었습니다." + clickFish);

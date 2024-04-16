@@ -1,5 +1,6 @@
 package client.frame.miniGame;
 
+import client.components.Navbar;
 import client.components.Sunfish;
 import client.components.Shark;
 import client.frame.HomeScreen;
@@ -25,21 +26,20 @@ public class MiniGamePanel extends JPanel implements ActionListener {
 
     private int gameTimeRemaining;
 
-    public MiniGamePanel(HomeScreen homeScreen) {
+    public MiniGamePanel(HomeScreen homeScreen, Navbar navbar) {
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
         setLayout(null);
 
         timerLabel = new JLabel();
-        timerLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        timerLabel.setText("Timer : 30");
+        timerLabel.setFont(new Font("NanumGothic", Font.BOLD, 35));
         timerLabel.setForeground(Color.BLACK);
-        timerLabel.setBounds(20, 20, 300, 30);
+        timerLabel.setBounds(40, 40, 300, 30);
         add(timerLabel);
 
         startButton = new CustomButton("게임 시작 !");
         add(startButton);
 
-        sunfish = new Sunfish();
+        sunfish = new Sunfish(navbar);
         add(sunfish);
 
         sharks = new ArrayList<>();
@@ -95,6 +95,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
             updateTimerLabel();
             countTimer.start();
             startButton.setVisible(false);
+            timerLabel.setVisible(true);
             requestFocusInWindow();
 
             addKeyListener(new KeyAdapter() {
