@@ -7,12 +7,11 @@ public class UserController {
 
     // Main View
     public UserController() {
-        // new CalcView(this);
-        // userDao = new UserDao();
+         userDao = new UserDao();
     }
 
-    public void signUp(String id, String password, String sunfishName) {
-        userDao.signUp(new User(id, password, sunfishName));
+    public boolean signUp(String id, String password, String sunfishName) {
+        return(userDao.signUp(new User(id, password, sunfishName)));
     }
 
     public User login(String id, String password) {

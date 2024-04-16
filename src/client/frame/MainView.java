@@ -1,24 +1,25 @@
 package client.frame;
 
-import client.components.User;
-import client.components.Start;
+import client.components.*;
+import server.controller.UserController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import client.components.Navbar; // Navbar를 import합니다.
 
 public class MainView extends JFrame {
 
     private final BackgroundImagePanel backgroundImagePanel;
-    private final Start startComponent;
-    private User userComponent;
+    private final Start startComponent = new Start(this);
+    private final SignUp signUpComponent = new SignUp(this);
+    private final SignIn signInComponent = new SignIn(this);
     private final Navbar navbar;
 
     private String backgroundType;
 
     private JButton btn_toggleBackground;
 
+    public UserController userController = new UserController();
 
     public MainView() {
         // deps
@@ -31,7 +32,6 @@ public class MainView extends JFrame {
         this.backgroundImagePanel = new BackgroundImagePanel("intro");
         this.setContentPane(backgroundImagePanel);
 
-        this.startComponent = new Start(this);
         startComponent.setBounds(0, 0, 1280, 960);
         this.add(startComponent);
 
@@ -76,10 +76,25 @@ public class MainView extends JFrame {
 //    }
 
     public void switchView(String type) {
-        userComponent = new User(this, type);
-        remove(startComponent);
-        userComponent.setBounds(0,0,1280,960);
-        add(userComponent);
+        if (type.equals("signIn")) {
+
+            signInComponent.setBounds(0,0,1280,960);
+            remove(startComponent);
+            add(signInComponent);
+        } else if (type.equals("signUp")) {
+            signUpComponent.setBounds(0,0,1280,960);
+            remove(startComponent);
+            add(signUpComponent);
+        } else if (type.equals("signUpFinished")) {
+            startComponent.setBounds(0,0,1280,960);
+            remove(signUpComponent);
+            add(startComponent);
+        } else if (type.equals("signInFinished")) {
+            startComponent.setBounds(0,0,1280,960);
+            remove(signInComponent);
+            add(startComponent);
+        }
+
         revalidate();
         repaint();
     }
