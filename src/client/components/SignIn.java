@@ -1,5 +1,6 @@
 package client.components;
 
+import client.controller.FrontController;
 import client.frame.MainView;
 import server.controller.UserController;
 
@@ -14,6 +15,8 @@ public class SignIn extends JComponent {
     private JTextField tf_pwd = new JTextField();
     private JLabel la_pwd = new JLabel("비밀번호");
     private JButton btn_whiteRounded;
+
+    private FrontController frontController = FrontController.getInstance();
 
     public SignIn (MainView mainView) {
         // Label ID
@@ -40,9 +43,10 @@ public class SignIn extends JComponent {
         btn_whiteRounded.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (mainView.userController.login(tf_id.getText(), tf_pwd.getText())!=null) {
-                    mainView.switchView("signInFinished");
-                }
+//                if (mainView.userController.login(tf_id.getText(), tf_pwd.getText())!=null) {
+//                    mainView.switchView("signInFinished");
+//                }
+                frontController.userSignIn(tf_id.getText(), tf_pwd.getText());
             }
         });
     }

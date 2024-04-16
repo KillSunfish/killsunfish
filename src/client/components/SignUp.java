@@ -1,5 +1,6 @@
 package client.components;
 
+import client.controller.FrontController;
 import client.frame.MainView;
 import server.controller.UserController;
 
@@ -16,6 +17,8 @@ public class SignUp extends JComponent {
     private JTextField tf_nickname = new JTextField();
     private JLabel la_nickname = new JLabel("개복치 이름을 입력해주세요.");
     private JButton btn_whiteRounded;
+
+    private FrontController frontController = FrontController.getInstance();
 
     public SignUp (MainView mainView) {
         // Label ID
@@ -50,10 +53,10 @@ public class SignUp extends JComponent {
         btn_whiteRounded.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (mainView.userController.signUp(tf_id.getText(), tf_pwd.getText(), tf_nickname.getText())) {
-                    mainView.switchView("signUpFinished");
-                }
-
+//                if (mainView.userController.signUp(tf_id.getText(), tf_pwd.getText(), tf_nickname.getText())) {
+//                    mainView.switchView("signUpFinished");
+//                }
+                frontController.userSignUp(tf_id.getText(), tf_pwd.getText(), tf_nickname.getText());
             }
         });
     }

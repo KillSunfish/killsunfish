@@ -1,5 +1,6 @@
 package client.frame.miniGame;
 
+import client.controller.FrontController;
 import client.frame.HomeScreen;
 
 import javax.swing.*;
@@ -24,7 +25,7 @@ public class MiniGameDeadPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 homeScreen.setVisible(true);
-                homeScreen.getContentPane().remove(1);
+//                homeScreen.getContentPane().remove(1);
                 homeScreen.revalidate();
                 homeScreen.repaint();
             }

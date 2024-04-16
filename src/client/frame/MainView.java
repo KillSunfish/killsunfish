@@ -19,12 +19,17 @@ public class MainView extends JFrame {
 
     private JButton btn_toggleBackground;
 
+//    private HomeScreen homeScreen;
+    private JComponent mainComponent;
+
+    private JComponent overlayComponent;
+
     public UserController userController = new UserController();
 
     public MainView() {
         // deps
         this.backgroundType = "intro";
-        this.btn_toggleBackground = new JButton("toggle");
+//        this.btn_toggleBackground = new JButton("toggle");
         this.navbar = new Navbar(); // Navbar 추가
 
 
@@ -34,6 +39,9 @@ public class MainView extends JFrame {
 
         startComponent.setBounds(0, 0, 1280, 960);
         this.add(startComponent);
+//        this.mainComponent = new Start(this);
+//        this.mainComponent.setBounds(0, 0, 1280, 960);
+//        this.add(this.mainComponent);
 
         // init
         setTitle("sunfish game");
@@ -43,41 +51,10 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
 
-
-
-
-        // Navbar 위치 지정
-//        navbar.setBounds(0, 100, getWidth(), 50);
-//        add(navbar);
-
-        // test - toggle btn
-//        btn_toggleBackground.setBounds(100, 0, 100, 30);
-//        btn_toggleBackground.setBackground(Color.BLUE);
-//        addBtnActionListener(btn_toggleBackground);
-//        this.add(btn_toggleBackground);
-
-        // add
     }
 
-//    private void addBtnActionListener(AbstractButton btn) {
-//        ActionListener actionListener = (e) -> {
-//
-//            // intro or in game image
-//            this.backgroundImagePanel.modifyBackgroundImage("ingame".equals(this.backgroundType) ? "intro" : "ingame");
-//            // field to test toggle
-//            this.backgroundType = "ingame".equals(this.backgroundType) ? "intro" : "ingame";
-//
-//            // repaint after updated
-//            repaint();
-//
-//        };
-//
-//        btn.addActionListener(actionListener);
-//    }
-
-    public void switchView(String type) {
+    public void switchView(String type, JComponent jComponent) {
         if (type.equals("signIn")) {
-
             signInComponent.setBounds(0,0,1280,960);
             remove(startComponent);
             add(signInComponent);
@@ -90,10 +67,42 @@ public class MainView extends JFrame {
             remove(signUpComponent);
             add(startComponent);
         } else if (type.equals("signInFinished")) {
-            startComponent.setBounds(0,0,1280,960);
+            this.mainComponent = jComponent;
+            mainComponent.setBounds(0, 0, 1280, 960);
             remove(signInComponent);
-            add(startComponent);
+            add(mainComponent);
+        } else if ("main".equals(type)) {
+            this.backgroundImagePanel.modifyBackgroundImage("intro");
+            remove(this.overlayComponent);
+            startComponent.setBounds(0,0,1280,960);
+            this.add(startComponent);
+        } else if("mainGameFinished".equals(type)) {
+            System.out.println("home");
+            ((HomeScreen)this.mainComponent).removeMiniGamePanel();
         }
+
+        revalidate();
+        repaint();
+    }
+
+    public void switchView(JComponent jComponent) {
+        remove(mainComponent);
+        this.mainComponent = jComponent;
+        mainComponent.setBounds(0,0,1280,960);
+
+        add(mainComponent);
+        revalidate();
+        repaint();
+    }
+
+    public void setOverlay(JComponent jComponent) {
+        System.out.println("set overlay");
+        this.overlayComponent = jComponent;
+        overlayComponent.setBounds(0,0, this.getWidth(), this.getHeight());
+
+        backgroundImagePanel.modifyBackgroundImage("ingame");
+//        this.remove(mainComponent);
+        this.add(overlayComponent);
 
         revalidate();
         repaint();

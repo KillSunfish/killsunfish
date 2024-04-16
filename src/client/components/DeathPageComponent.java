@@ -1,5 +1,7 @@
 package client.components;
 
+import client.controller.FrontController;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -13,7 +15,11 @@ public class DeathPageComponent extends JComponent {
 
     private DeathImageComponent deathImageComponent;
 
+    private FrontController frontController;
+
     public DeathPageComponent(int deathCode) {
+        this.frontController = FrontController.getInstance();
+
         pnl_backgroundPanel = new JPanel();
         pnl_backgroundPanel.setBackground(new Color(57, 57, 57, 128));
         pnl_backgroundPanel.setSize(1280, 960);
@@ -37,8 +43,9 @@ public class DeathPageComponent extends JComponent {
 
     private void addBtnActionListener(AbstractButton btn) {
         ActionListener actionListener = (e) -> {
-            this.setVisible(false);
-            repaint();
+            frontController.returnToMainPage();
+//            this.setVisible(false);
+//            repaint();
         };
         btn.addActionListener(actionListener);
     }
