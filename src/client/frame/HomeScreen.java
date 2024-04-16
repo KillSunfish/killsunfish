@@ -105,9 +105,9 @@ public class HomeScreen extends JFrame {
         });
 
         shellFish = new ShellFish(-10, -10);
-        starfish1 = new StarFish(1, 1);
-        starfish2 = new StarFish(1, 1);
-        starfish3 = new StarFish(1, 1);
+        starfish1 = new StarFish(3, 3);
+        starfish2 = new StarFish(3, 3);
+        starfish3 = new StarFish(3, 3);
 
         crab1 = new Crab(5, 5);
         crab2 = new Crab(5, 5);
