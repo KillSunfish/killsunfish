@@ -8,6 +8,12 @@ import client.components.Shrimp;
 import client.components.ShellFish;
 import client.components.Octopus;
 import client.components.Crab;
+import client.frame.miniGame.MiniGamePanel;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import client.frame.miniGame.MenuButton;
 
 public class HomeScreen extends JFrame {
     private static final String INGAME_BACKGROUND_PATH = "src/client/assets/ingame_background.png";
@@ -20,6 +26,9 @@ public class HomeScreen extends JFrame {
     private StarFish starfish;
     private Octopus octopus;
     private Crab crab;
+    private JButton minigameButton;
+    private MiniGamePanel miniGamePanel;
+    private JLabel backgroundLabel;
 
     public HomeScreen() {
         // Load background image
@@ -31,7 +40,7 @@ public class HomeScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create JLabel for background image
-        JLabel backgroundLabel = new JLabel(backgroundImage);
+        backgroundLabel = new JLabel(backgroundImage);
 
         // Set layout to null to freely position components
         setLayout(null);
@@ -56,8 +65,23 @@ public class HomeScreen extends JFrame {
         backgroundLabel.add(octopus);
         backgroundLabel.add(crab);
 
-        // Add background label to the frame
+
+        MenuButton menuButton = new MenuButton(this);
+        menuButton.setBounds(getWidth() - 160, getHeight() - 150, 130, 120);
+        backgroundLabel.add(menuButton);
+
         add(backgroundLabel);
+
+        miniGamePanel = new MiniGamePanel(this);
+        miniGamePanel.setBounds(0, 0, getWidth(), getHeight());
+        miniGamePanel.setVisible(false);
+
+        add(miniGamePanel);
+    }
+
+    public void showMiniGamePanel() {
+        backgroundLabel.setVisible(false);
+        miniGamePanel.setVisible(true);
     }
 
     public static void main(String[] args) {
