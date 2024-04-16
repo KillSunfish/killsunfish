@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import client.frame.miniGame.MiniGameDeadPanel;
 import server.VO.UserVO;
 import client.components.Navbar;
 import client.components.CustomButton;
@@ -89,6 +90,7 @@ public class HomeScreen extends JFrame {
         backgroundLabel.setBounds(0, -100, getWidth(), getHeight());
 
         sunfish = new Sunfish(navbar);
+        sunfish.resetPosition();
         octopus = new Octopus(-250, -250);
 
         sunfish.addMouseListener(new MouseAdapter() {
@@ -213,12 +215,12 @@ public class HomeScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 backgroundLabel.setVisible(false);
+                miniGamePanel.initializeGame();
                 miniGamePanel.setVisible(true);
             }
         });
 
-
-        miniGamePanel = new MiniGamePanel(this, navbar);
+        miniGamePanel = new MiniGamePanel(this, navbar, backgroundLabel);
         miniGamePanel.setBounds(0, 0, getWidth(), getHeight());
         miniGamePanel.setVisible(false);
         add(miniGamePanel);
@@ -248,6 +250,7 @@ public class HomeScreen extends JFrame {
         starfish2.startMoving();
         starfish3.startMoving();
 
+        System.out.println(userVO.getWeight());
         navbar.setWeight(userVO.getWeight());
     }
 
@@ -291,9 +294,9 @@ public class HomeScreen extends JFrame {
         }
     }
 
-    public void updateSunfishLevel(int level) {
-        sunfish.updateImage(level);
-    }
+//    public void updateSunfishLevel(int level) {
+//        sunfish.updateImage(level);
+//    }
 
 
     public static void main(String[] args) {

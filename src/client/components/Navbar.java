@@ -51,7 +51,6 @@ public class Navbar extends JPanel {
 //        int increaseWidth = (int) (maxOrangeWidth * (weightIncrease / maxWeight)); // 주황색 칸의 증가 너비 계산
 //        this.orangeWidth = Math.min(this.orangeWidth + increaseWidth, maxOrangeWidth); // 주황색 칸의 너비를 증가시키되 최대 너비를 초과하지 않도록 함
         this.orangeWidth += weightIncrease * 100;
-        System.out.println(orangeWidth);
         if (this.orangeWidth >=1000){
             this.orangeWidth = this.orangeWidth-1000;
             levelUp(); // 레벨 업

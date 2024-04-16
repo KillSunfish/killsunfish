@@ -3,6 +3,7 @@ package client.components;
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 
 public class Sunfish extends JLabel {
@@ -22,7 +23,6 @@ public class Sunfish extends JLabel {
 
     public Sunfish(Navbar navbar) {
         this.navbar = navbar; // Navbar 객체를 전달받아 필드에 저장
-
         ImageIcon originalImageIcon = new ImageIcon(SUNFISH_IMAGE_PATH);
         Image originalImage = originalImageIcon.getImage();
         Image scaledImage = originalImage.getScaledInstance(SUNFISH_WIDTH, SUNFISH_HEIGHT, Image.SCALE_SMOOTH);
@@ -37,6 +37,21 @@ public class Sunfish extends JLabel {
 
         Timer timer = new Timer(1000, e -> updateSunfishImage());
         timer.start();
+    }
+
+    public Navbar getNavbar(){
+        return this.navbar;
+    }
+
+    public boolean intersects(Shape otherShape) {
+        Rectangle sunfishBounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
+
+        Area sunfishArea = new Area(sunfishBounds);
+        Area otherArea = new Area(otherShape);
+
+        sunfishArea.intersect(otherArea);
+
+        return !sunfishArea.isEmpty();
     }
 
     public void updateSunfishImage() {
@@ -92,6 +107,7 @@ public class Sunfish extends JLabel {
         g.drawImage(sunfishImage.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 
+
     // 위로 이동하는 메서드
     public void moveUp(int distance) {
         y = Math.max(y - distance, 0);
@@ -116,6 +132,12 @@ public class Sunfish extends JLabel {
         int rightBound = getParent().getWidth() - getWidth();
         x = Math.min(x + distance, rightBound);
         setLocation(x, y);
+    }
+
+    public  void resetPosition(){
+        x = (1280 - sunfishImage.getIconWidth()) / 2; // 가로 중앙 정렬
+        y = (980 - sunfishImage.getIconHeight()) / 2; // 세로 중앙 정렬
+        setBounds(x, y, sunfishImage.getIconWidth(), sunfishImage.getIconHeight());
     }
 
 }

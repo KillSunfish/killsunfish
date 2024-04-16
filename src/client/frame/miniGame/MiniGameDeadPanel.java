@@ -14,7 +14,7 @@ public class MiniGameDeadPanel extends JPanel {
     private static final String MINIGAME_BACKGROUND_PATH = "src/client/assets/mini_game_dead_page.png";
     private JButton menuButton;
 
-    public MiniGameDeadPanel(HomeScreen homeScreen) {
+    public MiniGameDeadPanel(JLabel backgroundLabel) {
         backgroundImage = new ImageIcon(MINIGAME_BACKGROUND_PATH);
         setLayout(null);
 
@@ -23,10 +23,8 @@ public class MiniGameDeadPanel extends JPanel {
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homeScreen.setVisible(true);
-                homeScreen.getContentPane().remove(1);
-                homeScreen.revalidate();
-                homeScreen.repaint();
+                backgroundLabel.setVisible(true);
+                backgroundLabel.repaint();
             }
         });
 
