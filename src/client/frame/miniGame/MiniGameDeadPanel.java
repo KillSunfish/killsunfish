@@ -24,12 +24,9 @@ public class MiniGameDeadPanel extends JPanel {
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuButton.setVisible(false);
                 backgroundLabel.setVisible(true);
                 backgroundLabel.repaint();
-                homeScreen.setVisible(true);
-//                homeScreen.getContentPane().remove(1);
-                homeScreen.revalidate();
-                homeScreen.repaint();
             }
         });
 
@@ -42,6 +39,11 @@ public class MiniGameDeadPanel extends JPanel {
         });
         // 버튼 추가
         add(menuButton);
+    }
+
+    public void showPanel() {
+        setVisible(true);
+        menuButton.setVisible(true);
     }
 
     @Override

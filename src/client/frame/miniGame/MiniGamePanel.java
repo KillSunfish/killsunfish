@@ -69,6 +69,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
                     gameTimeRemaining--;
                     updateTimerLabel();
                 } else {
+                    countTimer.stop();
                     backgroundLabel.setVisible(true);
                     gameDeadPanel.setVisible(false);
                     setVisible(false);
@@ -113,7 +114,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            gameTimeRemaining = 30;
+            gameTimeRemaining = 5;
             updateTimerLabel();
             countTimer.start();
             startButton.setVisible(false);
@@ -197,7 +198,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
         timerLabel.setVisible(false);
         add(gameDeadPanel);
         gameDeadPanel.setBounds(0, 0, getWidth(), getHeight());
-        gameDeadPanel.setVisible(true);
+        gameDeadPanel.showPanel();
         sunfish.setVisible(false);
     }
 }

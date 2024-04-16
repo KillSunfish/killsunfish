@@ -297,7 +297,7 @@ public class HomeScreen extends JComponent {
     }
 
     private void increaseWeightAndMoveSunfish(Component foodComponent, double weightIncrease) {
-        System.out.println(weightIncrease);
+        weight = navbar.getWeight();
         weight += weightIncrease;
         navbar.setWeight(weight);
 
