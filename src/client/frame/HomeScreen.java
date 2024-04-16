@@ -291,9 +291,9 @@ public class HomeScreen extends JFrame {
         }
     }
 
-    public void updateSunfishLevel(int level) {
-        sunfish.updateImage(level);
-    }
+    // public void updateSunfishLevel(int level) {
+    //     sunfish.updateImage(level);
+    // }
 
 
     public static void main(String[] args) {
