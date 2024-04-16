@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-
 import server.VO.UserVO;
 import client.components.Navbar;
 import client.components.CustomButton;
@@ -30,14 +29,14 @@ public class HomeScreen extends JFrame {
     private CustomButton btn_minus;
     private JLabel lbl_temperature;
     private Sunfish sunfish;
-    private Shrimp shrimp;
+    private Shrimp shrimp1, shrimp2;
 
     private ShellFish shellFish;
 
-    private StarFish starfish;
+    private StarFish starfish1, starfish2, starfish3;
     private Octopus octopus;
-    private Crab crab;
-    private RottenFish rottenfish;
+    private Crab crab1, crab2;
+    private RottenFish rottenfish1, rottenfish2, rottenfish3, rottenfish4, rottenfish5;
 
     private double temperature = 20.0;
     private double weight = 0.1; // 초기 weight 값
@@ -79,20 +78,17 @@ public class HomeScreen extends JFrame {
 
         sunfish = new Sunfish();
         octopus = new Octopus(-250, -250);
-        crab = new Crab(5,5);
 
         sunfish.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 clickFish++;
-                if (clickFish>7){
+                if (clickFish > 7) {
                     touchDeath = -1;
-                    System.out.println("새로운 변수 클릭 횟수: " + clickFish+ "번 만져서 개복치 사망");
-                }
-                else{
+                    System.out.println("새로운 변수 클릭 횟수: " + clickFish + "번 만져서 개복치 사망");
+                } else {
                     System.out.println("새로운 변수 클릭 횟수: " + clickFish);
                 }
-
             }
         });
 
@@ -100,7 +96,6 @@ public class HomeScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 increaseWeightAndMoveSunfish(octopus, 0.6);
-
             }
         });
 
@@ -112,9 +107,15 @@ public class HomeScreen extends JFrame {
             }
         });
 
-        starfish = new StarFish(1,1);
-        crab = new Crab(5,5);
-        shrimp = new Shrimp(15,15);
+        starfish1 = new StarFish(1, 1);
+        starfish2 = new StarFish(1, 1);
+        starfish3 = new StarFish(1, 1);
+
+        crab1 = new Crab(5, 5);
+        crab2 = new Crab(5, 5);
+
+        shrimp1 = new Shrimp(15, 15);
+        shrimp2 = new Shrimp(-7, -7);
 
         // Shrimp, ShellFish, Octopus, Crab, StarFish 객체의 MouseListener를 한 번에 추가
         MouseAdapter foodMouseListener = new MouseAdapter() {
@@ -139,54 +140,91 @@ public class HomeScreen extends JFrame {
                 }
 
                 // 모든 먹이가 없어졌을 때 다시 보이도록 설정
-                if (!shrimp.isVisible() && !shellFish.isVisible() && !octopus.isVisible() && !crab.isVisible() && !starfish.isVisible()) {
-                    shrimp.setVisible(true);
+                if (!shrimp1.isVisible() && !shrimp2.isVisible() && !shellFish.isVisible() && !octopus.isVisible() && !crab1.isVisible() && !crab2.isVisible() &&
+                        !starfish1.isVisible() && !starfish2.isVisible() && !starfish3.isVisible()) {
+                    shrimp1.setVisible(true);
+                    shrimp2.setVisible(true);
                     shellFish.setVisible(true);
                     octopus.setVisible(true);
-                    crab.setVisible(true);
-                    starfish.setVisible(true);
+                    crab1.setVisible(true);
+                    crab2.setVisible(true);
+                    starfish1.setVisible(true);
+                    starfish2.setVisible(true);
+                    starfish3.setVisible(true);
                 }
             }
         };
 
-        shrimp.addMouseListener(foodMouseListener);
+        shrimp1.addMouseListener(foodMouseListener);
+        shrimp2.addMouseListener(foodMouseListener);
         shellFish.addMouseListener(foodMouseListener);
         octopus.addMouseListener(foodMouseListener);
-        crab.addMouseListener(foodMouseListener);
-        starfish.addMouseListener(foodMouseListener);
+        crab1.addMouseListener(foodMouseListener);
+        crab2.addMouseListener(foodMouseListener);
+        starfish1.addMouseListener(foodMouseListener);
+        starfish2.addMouseListener(foodMouseListener);
+        starfish3.addMouseListener(foodMouseListener);
 
-        rottenfish = new RottenFish(5, 5);
-        backgroundLabel.add(rottenfish);
-        rottenfish.startMoving();
+        rottenfish1 = new RottenFish(5, 5);
+        rottenfish2 = new RottenFish(5, 5);
+        rottenfish3 = new RottenFish(5, 5);
+        rottenfish4 = new RottenFish(5, 5);
+        rottenfish5 = new RottenFish(5, 5);
+
+        backgroundLabel.add(rottenfish1);
+        backgroundLabel.add(rottenfish2);
+        backgroundLabel.add(rottenfish3);
+        backgroundLabel.add(rottenfish4);
+        backgroundLabel.add(rottenfish5);
+
+        rottenfish1.startMoving();
+        rottenfish2.startMoving();
+        rottenfish3.startMoving();
+        rottenfish4.startMoving();
+        rottenfish5.startMoving();
 
         // RottenFish를 클릭하면 개복치가 죽음
-        rottenfish.addMouseListener(new MouseAdapter() {
+        MouseAdapter rottenFishMouseListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 eatDeath = -1;
                 System.out.println("RottenFish를 클릭하여 개복치가 죽었습니다.: " + eatDeath);
             }
-        });
+        };
+
+        rottenfish1.addMouseListener(rottenFishMouseListener);
+        rottenfish2.addMouseListener(rottenFishMouseListener);
+        rottenfish3.addMouseListener(rottenFishMouseListener);
+        rottenfish4.addMouseListener(rottenFishMouseListener);
+        rottenfish5.addMouseListener(rottenFishMouseListener);
 
         add(backgroundLabel);
         backgroundLabel.add(sunfish);
         backgroundLabel.add(octopus);
-        backgroundLabel.add(crab);
+        backgroundLabel.add(crab1);
+        backgroundLabel.add(crab2);
 
         clickTimer = new Timer(RESET_INTERVAL, (e) -> {
             clickFish = 0; // 클릭 횟수 초기화
-            System.out.println("클릭 횟수가 초기화되었습니다."+clickFish);
+            System.out.println("클릭 횟수가 초기화되었습니다." + clickFish);
         });
         clickTimer.start();
-        backgroundLabel.add(shrimp);
+        backgroundLabel.add(shrimp1);
+        backgroundLabel.add(shrimp2);
         backgroundLabel.add(shellFish);
-        backgroundLabel.add(starfish);
+        backgroundLabel.add(starfish1);
+        backgroundLabel.add(starfish2);
+        backgroundLabel.add(starfish3);
 
         octopus.startMoving();
-        crab.startMoving();
-        shrimp.startMoving();
+        crab1.startMoving();
+        crab2.startMoving();
+        shrimp1.startMoving();
+        shrimp2.startMoving();
         shellFish.startMoving();
-        starfish.startMoving();
+        starfish1.startMoving();
+        starfish2.startMoving();
+        starfish3.startMoving();
 
         navbar.setWeight(userVO.getWeight());
     }
