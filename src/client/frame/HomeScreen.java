@@ -17,6 +17,9 @@ import client.components.Shrimp;
 import client.components.ShellFish;
 import client.components.Octopus;
 import client.components.Crab;
+import client.frame.miniGame.MiniGamePanel;
+import java.awt.event.ActionEvent;
+import client.frame.miniGame.MenuButton;
 import client.components.RottenFish;
 
 public class HomeScreen extends JFrame {
@@ -35,6 +38,9 @@ public class HomeScreen extends JFrame {
 
     private StarFish starfish1, starfish2, starfish3;
     private Octopus octopus;
+    private JButton minigameButton;
+    private MiniGamePanel miniGamePanel;
+    private JLabel backgroundLabel;
     private Crab crab1, crab2;
     private RottenFish rottenfish1, rottenfish2, rottenfish3, rottenfish4, rottenfish5;
 
@@ -49,8 +55,10 @@ public class HomeScreen extends JFrame {
     private int overEatDeath = 0;
     private int underEatDeath = 0;
     private double eatenWeight = 0.0; // 시간 내에 먹은 양
+    private UserVO userVO;
 
     public HomeScreen(UserVO userVO) {
+        this.userVO = userVO;
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
         navbar = new Navbar();
         setTitle("Sunfish Game");
@@ -58,6 +66,8 @@ public class HomeScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
+        // Create JLabel for background image
+        backgroundLabel = new JLabel(backgroundImage);
         navbar.setBounds(130, 40, 1020, 110);
         add(navbar);
 
@@ -121,6 +131,7 @@ public class HomeScreen extends JFrame {
                     increaseWeightAndMoveSunfish(foodComponent, 1);
                     navbar.setOrangeWidth(1);
                 } else if (foodComponent instanceof Crab) {
+
                     increaseWeightAndMoveSunfish(foodComponent, 0.4);
                     navbar.setOrangeWidth(0.4);
                 } else if (foodComponent instanceof StarFish) {
@@ -200,6 +211,28 @@ public class HomeScreen extends JFrame {
         backgroundLabel.add(crab1);
         backgroundLabel.add(crab2);
 
+        MenuButton menuButton = new MenuButton(this);
+        menuButton.setBounds(getWidth() - 160, getHeight() - 150, 130, 120);
+        backgroundLabel.add(menuButton);
+        add(backgroundLabel);
+
+        menuButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backgroundLabel.setVisible(false);
+                miniGamePanel.setVisible(true);
+            }
+        });
+
+
+        miniGamePanel = new MiniGamePanel(this, navbar);
+        miniGamePanel.setBounds(0, 0, getWidth(), getHeight());
+        miniGamePanel.setVisible(false);
+        add(miniGamePanel);
+
+    }
+
+    public void showMiniGamePanel() {
         clickTimer = new Timer(RESET_INTERVAL, (e) -> {
             clickFish = 0; // 클릭 횟수 초기화
             System.out.println("클릭 횟수가 초기화되었습니다." + clickFish);
