@@ -26,10 +26,6 @@ public class MiniGameDeadPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 backgroundLabel.setVisible(true);
                 backgroundLabel.repaint();
-                homeScreen.setVisible(true);
-//                homeScreen.getContentPane().remove(1);
-                homeScreen.revalidate();
-                homeScreen.repaint();
             }
         });
 
