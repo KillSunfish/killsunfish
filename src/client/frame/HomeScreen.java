@@ -69,7 +69,7 @@ public class HomeScreen extends JComponent {
         frontController = FrontController.getInstance();
 
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
-        navbar = new Navbar();
+        navbar = new Navbar(userVO);
 //        setTitle("Sunfish Game");
         setSize(1280, 960);
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

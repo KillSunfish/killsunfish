@@ -4,16 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import client.components.Sunfish;
 import client.controller.FrontController;
+import server.VO.UserVO;
 
 public class Navbar extends JPanel {
     private int orangeWidth = 0; // 주황색 칸의 너비
     private double weight = 0.1; // 무게
     private int level = 1; // 레벨
     private Sunfish sunfish;
+    private UserVO userVO;
+
 
     private FrontController frontController;
 
-    public Navbar() {
+    public Navbar(UserVO userVO) {
+        this.userVO = userVO;
         frontController = FrontController.getInstance();
         setPreferredSize(new Dimension(1280, 50)); // Navbar의 크기 설정
         setBackground(Color.GRAY); // 배경색 설정
@@ -42,10 +46,11 @@ public class Navbar extends JPanel {
         // 텍스트 그리기
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 50)); // 폰트 설정
-        g2d.drawString("LV." + level + " : 개복치", 20, 55); // 텍스트 그리기
+        g2d.drawString("LV." + level + " :"+userVO.getSunfishName(), 20, 55); // 텍스트 그리기
 
         // Weight 값 표시
         g2d.drawString(String.format("%.1f", weight) + "KG", 830, 55); // 텍스트 그리기
+//        System.out.println(userVO.getSunfishName());
     }
 
     // 주황색 칸의 너비를 설정하는 메서드
