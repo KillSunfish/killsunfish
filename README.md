@@ -36,18 +36,27 @@ JAVA Swing을 활용해 개복치 키우기 게임을 제작했습니다. <br />
 <img width="600" alt="스크린샷 2024-04-17 오후 6 45 45" src="https://github.com/KillSunfish/killsunfish/assets/70675133/cd956bba-6408-4bef-bc13-f6499457cc1d">
 
 <h3>온도 안 맞아서 사망</h3>
+
+-  온도가 15도 미만, 25도 초과하면 사망
+<br>
 <img width="600" alt="스크린샷 2024-04-17 오후 6 46 01" src="https://github.com/KillSunfish/killsunfish/assets/70675133/4dde2074-dbc3-4740-944e-5dac84eb5e82">
 
 <h3>잘못 먹어서 사망</h3>
+
+- rottenFish 먹으면 사망
 <img width="600" alt="스크린샷 2024-04-17 오후 6 46 13" src="https://github.com/KillSunfish/killsunfish/assets/70675133/d3c65e1b-4277-4260-ad5d-dff23534016f">
 
 <h3>미니 게임 화면</h3>
 <img width="600" alt="스크린샷 2024-04-17 오후 6 52 18" src="https://github.com/KillSunfish/killsunfish/assets/70675133/d24330bf-f968-4518-80ae-1f07e1bc90b4">
 
 <h3>미니 게임에서 사망</h3>
+
+- 상어에게 물리면 사망
 <img width="600" alt="스크린샷 2024-04-17 오후 6 47 09" src="https://github.com/KillSunfish/killsunfish/assets/70675133/fd6561cd-e43b-4fb3-b8b5-3c35b5213adf">
 
 <h3>많이 만져서 사망</h3>
+
+- 5초내에 7번 만지면 사망
 <img width="600" alt="스크린샷 2024-04-17 오후 6 46 31" src="https://github.com/KillSunfish/killsunfish/assets/70675133/c34de494-4643-4d56-8cce-42322d251bf0">
 
 ## 폴더 구조
