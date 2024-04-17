@@ -73,7 +73,7 @@ public class MiniGamePanel extends JPanel implements ActionListener {
                     backgroundLabel.setVisible(true);
                     gameDeadPanel.setVisible(false);
                     setVisible(false);
-                    sunfish.getNavbar().setOrangeWidth(0.05);
+                    sunfish.getNavbar().setOrangeWidth(5);
                     double weight = sunfish.getNavbar().getWeight();
                     sunfish.getNavbar().setWeight(weight + 5.0);
                 }
