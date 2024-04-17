@@ -117,8 +117,8 @@ public class HomeScreen extends JComponent {
             }
         });
 
-        // 일정 시간 동안 먹은 양이 기준치를 초과할 때 죽는 기능을 위한 30초 타이머
-        Timer checkEatenWeightTimer = new Timer(30000, (e) -> {
+        // 일정 시간 동안 먹은 양이 기준치를 초과할 때 죽는 기능을 위한 5분 타이머
+        Timer checkEatenWeightTimer = new Timer(300000, (e) -> {
             checkEatenWeight();
         });
         checkEatenWeightTimer.start();
@@ -350,19 +350,21 @@ public class HomeScreen extends JComponent {
     }
 
     private void checkEatenWeight() {
-        // 30초 경과 후에 먹은 양 비교
-        if (eatenWeight <= 2.0) {
-            underEatDeath = -1;
-            frontController.sunfishDiesByCode(3);
-            System.out.println("일정 시간 내 먹은 양이 2 이하이므로 개복치가 죽었습니다.");
-        } else if (eatenWeight >= 20.0) {
-            overEatDeath = -1;
-            frontController.sunfishDiesByCode(2);
-            System.out.println("일정 시간 내 먹은 양이 20 이상이므로 개복치가 죽었습니다.");
-        }
+        if (eatDeath != -1) {
+            // 30초 경과 후에 먹은 양 비교
+            if (eatenWeight <= 2.0) {
+                underEatDeath = -1;
+                frontController.sunfishDiesByCode(3);
+                System.out.println("일정 시간 내 먹은 양이 2 이하이므로 개복치가 죽었습니다.");
+            } else if (eatenWeight >= 20.0) {
+                overEatDeath = -1;
+                frontController.sunfishDiesByCode(2);
+                System.out.println("일정 시간 내 먹은 양이 20 이상이므로 개복치가 죽었습니다.");
+            }
 
-        // 먹은 양 초기화
-        eatenWeight = 0.0;
+            // 먹은 양 초기화
+            eatenWeight = 0.0;
+        }
     }
 
 //    public void updateSunfishLevel(int level) {

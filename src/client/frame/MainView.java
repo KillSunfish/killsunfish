@@ -101,7 +101,7 @@ public class MainView extends JFrame {
         overlayComponent.setBounds(0,0, this.getWidth(), this.getHeight());
 
         backgroundImagePanel.modifyBackgroundImage("ingame");
-//        this.remove(mainComponent);
+        this.remove(mainComponent);
         this.add(overlayComponent);
 
         revalidate();
