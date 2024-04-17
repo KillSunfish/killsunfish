@@ -69,7 +69,7 @@ public class HomeScreen extends JComponent {
         frontController = FrontController.getInstance();
 
         backgroundImage = new ImageIcon(INGAME_BACKGROUND_PATH);
-        navbar = new Navbar();
+        navbar = new Navbar(userVO);
 //        setTitle("Sunfish Game");
         setSize(1280, 960);
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -306,7 +306,7 @@ public class HomeScreen extends JComponent {
     }
 
     private void increaseWeightAndMoveSunfish(Component foodComponent, double weightIncrease) {
-        System.out.println(weightIncrease);
+        weight = navbar.getWeight();
         weight += weightIncrease;
         navbar.setWeight(weight);
 
