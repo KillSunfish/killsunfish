@@ -1,8 +1,9 @@
 package client.frame;
 
 import client.components.*;
+import server.VO.UserVO;
 import server.controller.UserController;
-
+import server.VO.UserVO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ public class MainView extends JFrame {
     private final SignUp signUpComponent = new SignUp(this);
     private final SignIn signInComponent = new SignIn(this);
     private final Navbar navbar;
+    private UserVO userVO;
 
     private String backgroundType;
 
@@ -30,7 +32,7 @@ public class MainView extends JFrame {
         // deps
         this.backgroundType = "intro";
 //        this.btn_toggleBackground = new JButton("toggle");
-        this.navbar = new Navbar(); // Navbar 추가
+        this.navbar = new Navbar(userVO); // Navbar 추가
 
 
         // background panel
